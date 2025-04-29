@@ -63,7 +63,6 @@ class Asteroid extends CircleShape {
         } else {
             this.hitboxRadius = this.radius * 0.75;
         }
-        console.log("Hitbox for radius", this.radius, "is", this.hitboxRadius);
     }
     
 
@@ -79,7 +78,7 @@ class Asteroid extends CircleShape {
     
             let angle = Math.random() * 360;
             let rad = angle * Math.PI / 180;
-            let speed = Math.random() * 90 + 50;
+            let speed = Math.random() * 95 + 50;
             newAsteroid.velocity = {
                 x: Math.cos(rad) * speed,
                 y: Math.sin(rad) * speed

@@ -3,6 +3,7 @@ import { AsteroidField } from './asteroidfield.js';
 import { Shot } from './shot.js';
 import { Asteroid } from './asteroid.js';
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from './constants.js';
+import { supabase } from './supabase.js';
 
 let canvas = document.getElementById('gameCanvas');
 let ctx = canvas.getContext('2d');
@@ -14,6 +15,11 @@ let updatable = [];
 let drawable = [];
 let shots = [];
 let asteroids = [];
+
+let highScores = [];
+let scoreSubmitted = false;
+
+
 window.keys = {};
 document.addEventListener('keydown', function(event) {
     window.keys[event.key.toLowerCase()] = true;
@@ -133,6 +139,12 @@ function gameLoop() {
             ctx.fillText("Final Score: " + score, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 50);
             ctx.restore();
 
+            if (!scoreSubmitted) {
+                saveScore(score);
+                scoreSubmitted = true;
+                fetchTopScores();
+            }
+
             restartButton.style.display = "block";
         }
     } else {
@@ -184,6 +196,33 @@ function gameLoop() {
     ctx.textAlign = 'left';
     ctx.fillText('W = forward   A = rotate left   D = rotate right   S = backward   SPACE = shoot', 10, SCREEN_HEIGHT - 10);
     ctx.restore();
+
+        
+    ctx.save();
+    ctx.fillStyle = 'red';
+    ctx.font = '18px Arial';
+    ctx.textAlign = 'right';
+
+    ctx.fillText("Top Scores:", SCREEN_WIDTH - 10, SCREEN_HEIGHT - 450);
+
+    // Beállítjuk az oszlopokat
+    let startY = SCREEN_HEIGHT - 430;
+    let padding = 18; // A sorok közötti távolság
+    
+    highScores.forEach((entry, index) => {
+        // A sorszámokat és pontszámokat fix szélességgel igazítjuk
+        let indexText = `${index + 1}.`; // Sorszám (pl. 1.)
+        let scoreText = entry.score.toString(); // Pontszám
+    
+        // Sorszám kiírása balra igazítva
+        ctx.fillText(indexText, SCREEN_WIDTH - 50, startY + index * padding);
+        
+        // Pontszám kiírása jobbra igazítva
+        ctx.fillText(scoreText, SCREEN_WIDTH -10, startY + index * padding);
+    });
+    
+    ctx.restore();
+
     requestAnimationFrame(gameLoop);
 }
 
@@ -193,6 +232,8 @@ backgroundImage.src = 'images/background.jpg';
 backgroundImage.onload = function() {
     gameLoop();
 };
+fetchTopScores();
+gameLoop();
 
 document.addEventListener('keydown', function(event) {
     if (window.key === 'a') player.rotate(-1);
@@ -223,6 +264,7 @@ function restartGame() {
     countdownRunning = true;
 
     score = 0
+    scoreSubmitted = false;
 
     restartButton.style.display = "none";
 
@@ -235,4 +277,19 @@ let restartButton = document.getElementById("restartButton");
 restartButton.addEventListener("click", () => {
     restartGame();
 });
+
+async function saveScore(score) {
+    await supabase.from('scores').insert([{ score }]);
+}
+
+async function fetchTopScores() {
+    const { data, error } = await supabase
+        .from('scores')
+        .select('score')
+        .order('score', { ascending: false })
+        .limit(10);
+    if (!error) {
+        highScores = data;
+    }
+}
 
