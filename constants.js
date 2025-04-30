@@ -3,7 +3,7 @@ export const SCREEN_HEIGHT = 720;
 
 export const ASTEROID_MIN_RADIUS = 24;
 export const ASTEROID_KINDS = 5;
-export const ASTEROID_SPAWN_RATE = 0.78;  // seconds
+export const ASTEROID_SPAWN_RATE = 0.72;  // seconds
 export const ASTEROID_MAX_RADIUS = ASTEROID_MIN_RADIUS * ASTEROID_KINDS;
 
 export const PLAYER_RADIUS = 12;

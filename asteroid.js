@@ -78,7 +78,7 @@ class Asteroid extends CircleShape {
     
             let angle = Math.random() * 360;
             let rad = angle * Math.PI / 180;
-            let speed = Math.random() * 95 + 50;
+            let speed = Math.random() * 105 + 50;
             newAsteroid.velocity = {
                 x: Math.cos(rad) * speed,
                 y: Math.sin(rad) * speed
