@@ -1,8 +1,11 @@
 import { CircleShape } from "./circleshape.js"
 import { PLAYER_SHOOT_SPEED } from "./constants.js";
 import { Shot } from "./shot.js"
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "./constants.js";
+import { powerUps, drawable } from "./main.js"
 
 class Player extends CircleShape {
+    
     constructor(x, y, updatable, drawable, shots) {
         super(x, y, 43.5, 22.5);
         this.rotation = 0;
@@ -16,6 +19,9 @@ class Player extends CircleShape {
             this.imageLoaded = true;
         };
         this.imageLoaded = false
+        this.speedMultiplier = 1;
+        this.shootTimerMultiplier = 1;
+        this.powerUpTimeout = null
     }
 
     draw(ctx) {
@@ -26,7 +32,7 @@ class Player extends CircleShape {
             ctx.drawImage(this.image, -this.radius, -this.radius, this.radius * 2, this.radius * 2);
             ctx.restore();
         }
-/*             // Debug: kör hitbox kirajzolása
+/*              // Debug: kör hitbox kirajzolása
             ctx.beginPath();
             ctx.arc(this.position.x -1, this.position.y + 1, this.hitboxRadius, 0, 2 * Math.PI);
             ctx.strokeStyle = "red";
@@ -58,17 +64,38 @@ class Player extends CircleShape {
         if (window.keys[' ']) {
             this.shoot();
         }
-    }
+            // Wrap-around logic
+        if (this.position.x < -this.hitboxRadius) {
+            this.position.x = SCREEN_WIDTH + this.hitboxRadius;
+        } else if (this.position.x > SCREEN_WIDTH + this.hitboxRadius) {
+            this.position.x = -this.hitboxRadius;
+            }
+
+        if (this.position.y < -this.hitboxRadius) {
+            this.position.y = SCREEN_HEIGHT + this.hitboxRadius;
+        } else if (this.position.y > SCREEN_HEIGHT + this.hitboxRadius) {
+            this.position.y = -this.hitboxRadius;
+            }
+        
+        powerUps.forEach((powerUp, index) => {
+            if (this.collidesWithCircle(powerUp)) {
+                powerUps.splice(index, 1);
+                drawable.splice(drawable.indexOf(powerUp), 1);
+                this.activatePowerUp();
+            }
+        });
+     }
+    
 
     move(dt) {
         let forward = this.vector(0, -1).rotate(this.rotation);
-        this.position.x += forward.x * dt;
-        this.position.y += forward.y * dt;
+        this.position.x += forward.x * dt * this.speedMultiplier;
+        this.position.y += forward.y * dt * this.speedMultiplier;
     }
 
     shoot() {
         if (this.shootTimer > 0) return;
-        this.shootTimer = 0.3;
+        this.shootTimer = 0.3  * this.shootTimerMultiplier;;
 
         let shot = new Shot(this.position.x, this.position.y);
         let forward = this.vector(0, -1).rotate(this.rotation);
@@ -103,16 +130,33 @@ class Player extends CircleShape {
         return createVector(x, y);
         }
 
-        collidesWithCircle(circle) {
-            let adjustedX = this.position.x - 1;
-            let adjustedY = this.position.y + 1;
+    collidesWithCircle(circle) {
+        let adjustedX = this.position.x - 1;
+        let adjustedY = this.position.y + 1;
         
-            let dx = adjustedX - circle.position.x;
-            let dy = adjustedY - circle.position.y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
+        let dx = adjustedX - circle.position.x;
+        let dy = adjustedY - circle.position.y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
         
-            return distance < (this.radius + circle.radius);
-        }
+        return distance < (this.radius + circle.radius);
     }
+    
+    activatePowerUp() {
+        this.speedMultiplier = 2;
+        this.shootTimerMultiplier = 0.5;
+
+        this.powerUpEndTime = Date.now() + 8000
+
+        if (this.powerUpTimeout) clearTimeout(this.powerUpTimeout);
+
+        clearTimeout(this.powerUpTimeout);
+        this.powerUpTimeout = setTimeout(() => {
+            this.speedMultiplier = 1;
+            this.shootTimerMultiplier = 1;
+            this.powerUpTimeout = null;
+            this.powerUpEndTime = null;
+        }, 8000);
+    }
+}
 
 export { Player };

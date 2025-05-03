@@ -4,6 +4,7 @@ import { Shot } from './shot.js';
 import { Asteroid } from './asteroid.js';
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from './constants.js';
 import { supabase } from './supabase.js';
+import { PowerUp } from "./powerup.js";
 
 let canvas = document.getElementById('gameCanvas');
 let ctx = canvas.getContext('2d');
@@ -12,13 +13,14 @@ canvas.width = SCREEN_WIDTH;
 canvas.height = SCREEN_HEIGHT;
 
 let updatable = [];
-let drawable = [];
+export let drawable = [];
 let shots = [];
 let asteroids = [];
 
 let highScores = [];
 let scoreSubmitted = false;
 
+export let powerUps = [];
 
 window.keys = {};
 document.addEventListener('keydown', function(event) {
@@ -39,7 +41,6 @@ let asteroidField = new AsteroidField(updatable, drawable, asteroids);
 updatable.push(asteroidField);
 
 let gameOver = false;
-let countdownTime = 3;
 let countdownStarted = false;
 let countdownStartTime = 0;
 let countdownRunning = true;
@@ -48,6 +49,7 @@ let gameOverTime = 0;
 
 let gameTime = 60;
 let gameStartTime = 0;
+let powerUpSpawnTime = 0;
 let timeRemaining = gameTime;
 
 let score = 0;
@@ -67,6 +69,8 @@ function updateScoreFromHitbox(hitboxRadius) {
     }
 }
 
+let powerUpImage = new Image();
+powerUpImage.src = "images/boost.png";
 
 function gameLoop() {
     let now = Date.now();
@@ -109,7 +113,8 @@ function gameLoop() {
             displayText = "START";
         } else {
             countdownRunning = false;
-            gameStartTime = 0;
+            gameStartTime = Date.now();
+            powerUpSpawnTime = gameStartTime + 5000;
         }
 
         ctx.font = '74px Arial';
@@ -164,7 +169,7 @@ function gameLoop() {
         for (let asteroid of asteroids) {
             
             if (player.collidesWith(asteroid)) {
-                console.log("Game over!");
+/*                 console.log("Game over!"); */
                 gameOver = true;
                 gameOverTime = Date.now();
                 break;
@@ -182,6 +187,11 @@ function gameLoop() {
         }
 
         drawable.forEach(object => object.draw(ctx));
+
+        if (Date.now() >= powerUpSpawnTime) {
+            spawnPowerUp();
+            powerUpSpawnTime = Date.now() + 15000;
+        }
     }
     ctx.save();
     ctx.fillStyle = 'white';
@@ -190,6 +200,18 @@ function gameLoop() {
     ctx.fillText(`Time left: ${Math.ceil(timeRemaining)}s`, 20, 30);
     ctx.restore();
 
+    if (!gameOver && player.powerUpEndTime) {
+        const remaining = (player.powerUpEndTime - Date.now()) / 1000;
+    
+        if (remaining > 0) {
+            ctx.fillStyle = "white";
+            ctx.font = "18px Arial";
+            ctx.fillText(`Power-up time: ${remaining.toFixed(1)}s`, 21, 60);
+        } else {
+            player.powerUpEndTime = null;
+        }
+    }
+
     ctx.save();
     ctx.fillStyle = 'red';
     ctx.font = '14px Arial';
@@ -197,7 +219,17 @@ function gameLoop() {
     ctx.fillText('W = forward   A = rotate left   D = rotate right   S = backward   SPACE = shoot', 10, SCREEN_HEIGHT - 10);
     ctx.restore();
 
-        
+    const iconSize = 20;
+    const iconX = 7;
+    const iconY = canvas.height -50;
+    if (powerUpImage.complete) {
+        ctx.drawImage(powerUpImage, iconX, iconY, iconSize, iconSize);
+    }
+
+    ctx.font = "14px Arial";
+    ctx.fillStyle = "red";
+    ctx.fillText("- Power-Up: Doubles speed and fire rate", iconX + iconSize + 10, iconY + 15);
+
     ctx.save();
     ctx.fillStyle = 'red';
     ctx.font = '18px Arial';
@@ -205,19 +237,15 @@ function gameLoop() {
 
     ctx.fillText("Top Scores:", SCREEN_WIDTH - 10, SCREEN_HEIGHT - 450);
 
-    // Beállítjuk az oszlopokat
     let startY = SCREEN_HEIGHT - 430;
-    let padding = 18; // A sorok közötti távolság
+    let padding = 18;
     
     highScores.forEach((entry, index) => {
-        // A sorszámokat és pontszámokat fix szélességgel igazítjuk
-        let indexText = `${index + 1}.`; // Sorszám (pl. 1.)
-        let scoreText = entry.score.toString(); // Pontszám
+        let indexText = `${index + 1}.`;
+        let scoreText = entry.score.toString();
     
-        // Sorszám kiírása balra igazítva
         ctx.fillText(indexText, SCREEN_WIDTH - 50, startY + index * padding);
         
-        // Pontszám kiírása jobbra igazítva
         ctx.fillText(scoreText, SCREEN_WIDTH -10, startY + index * padding);
     });
     
@@ -229,19 +257,24 @@ function gameLoop() {
 let lastTime = Date.now();
 let backgroundImage = new Image();
 backgroundImage.src = 'images/background.jpg';
+
+const radius = 23
+
+function spawnPowerUp() {
+    let x = Math.random() * (SCREEN_WIDTH - 2 * radius) + radius;
+    let y = Math.random() * (SCREEN_HEIGHT - 2 * radius) + radius;
+    let p = new PowerUp(x, y);
+    powerUps.push(p);
+    drawable.push(p);
+    updatable.push(p);
+}
+
 backgroundImage.onload = function() {
     gameLoop();
 };
 fetchTopScores();
 gameLoop();
 
-document.addEventListener('keydown', function(event) {
-    if (window.key === 'a') player.rotate(-1);
-    if (window.key === 'd') player.rotate(1);
-    if (window.key === 'w') player.move(1);
-    if (window.key === 's') player.move(-1);
-    if (window.key === ' ') player.shoot();
-});
 
 function restartGame() {
     updatable.length = 0;
@@ -265,6 +298,8 @@ function restartGame() {
 
     score = 0
     scoreSubmitted = false;
+
+    gameStartTime = Date.now()
 
     restartButton.style.display = "none";
 
@@ -292,4 +327,3 @@ async function fetchTopScores() {
         highScores = data;
     }
 }
-
