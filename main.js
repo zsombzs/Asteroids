@@ -1,5 +1,5 @@
 export const urlParams = new URLSearchParams(window.location.search);
-export const theme = urlParams.get('theme') || 'space'; // alapértelmezett: 'space'
+export const theme = urlParams.get('theme') || 'space';
 
 import { Player } from './player.js';
 import { AsteroidField } from './asteroidfield.js';
@@ -78,6 +78,9 @@ function updateScoreFromHitbox(hitboxRadius) {
 let powerUpImage = new Image();
 powerUpImage.src = `themes/${theme}/boost.png`;
 
+const textColor = theme === 'ocean' ? '#f3f3b6' : 'red';
+const timeColor = theme === 'ocean' ? 'white' : 'white';
+
 function gameLoop() {
     let now = Date.now();
     let dt = (now - lastTime) / 1000;
@@ -87,14 +90,14 @@ function gameLoop() {
     ctx.drawImage(backgroundImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     ctx.save();
-    ctx.fillStyle = "red";
+    ctx.fillStyle = textColor;
     ctx.font = "48px Arial";
     ctx.textAlign = "center";
     ctx.fillText("Zsasteroids", canvas.width / 2, 50);
     ctx.restore();
 
     ctx.save();
-    ctx.fillStyle = 'red';
+    ctx.fillStyle = textColor;
     ctx.font = '24px Arial';
     ctx.textAlign = 'right';
     ctx.fillText("Score: " + score, SCREEN_WIDTH - 10, 30);
@@ -124,7 +127,7 @@ function gameLoop() {
         }
 
         ctx.font = '74px Arial';
-        ctx.fillStyle = 'red';
+        ctx.fillStyle = textColor;
         ctx.fillText(displayText, SCREEN_WIDTH / 2 - ctx.measureText(displayText).width / 2, SCREEN_HEIGHT / 2);
     } else if (gameOver) {
         if (!showGameOver) {
@@ -136,7 +139,7 @@ function gameLoop() {
         if (elapsedGameOver < 3) {
             ctx.save();
             ctx.font = '74px Arial';
-            ctx.fillStyle = 'red';
+            ctx.fillStyle = textColor;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText("GAME OVER", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
@@ -145,7 +148,7 @@ function gameLoop() {
         } else {
             ctx.save();
             ctx.font = '48px Arial';
-            ctx.fillStyle = 'red';
+            ctx.fillStyle = textColor;
             ctx.textAlign = 'center';
             ctx.fillText("Final Score: " + score, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 50);
             ctx.restore();
@@ -200,7 +203,7 @@ function gameLoop() {
         }
     }
     ctx.save();
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = timeColor;
     ctx.font = '20px Arial';
     ctx.textAlign = 'left';
     ctx.fillText(`Time left: ${Math.ceil(timeRemaining)}s`, 20, 30);
@@ -210,7 +213,7 @@ function gameLoop() {
         const remaining = (player.powerUpEndTime - Date.now()) / 1000;
     
         if (remaining > 0) {
-            ctx.fillStyle = "white";
+            ctx.fillStyle = timeColor;
             ctx.font = "18px Arial";
             ctx.fillText(`Power-up time: ${remaining.toFixed(1)}s`, 21, 60);
         } else {
@@ -219,7 +222,7 @@ function gameLoop() {
     }
 
     ctx.save();
-    ctx.fillStyle = 'red';
+    ctx.fillStyle = textColor;
     ctx.font = '14px Arial';
     ctx.textAlign = 'left';
     ctx.fillText('W = forward   A = rotate left   D = rotate right   S = backward   SPACE = shoot', 10, SCREEN_HEIGHT - 10);
@@ -233,11 +236,11 @@ function gameLoop() {
     }
 
     ctx.font = "14px Arial";
-    ctx.fillStyle = "red";
+    ctx.fillStyle = textColor;
     ctx.fillText("- Power-Up: Doubles speed and fire rate", iconX + iconSize + 10, iconY + 15);
 
     ctx.save();
-    ctx.fillStyle = 'red';
+    ctx.fillStyle = textColor;
     ctx.font = '18px Arial';
     ctx.textAlign = 'right';
 

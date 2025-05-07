@@ -10,7 +10,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100vh;
-  background: linear-gradient(-45deg, #0a0f1c, #0d1b2a, #1b263b, #0a0f1c);
+  background: linear-gradient(-45deg, #0a0f1c, #152b43, #31466c, #0a0f1c);
   background-size: 800% 800%;
   animation: gradientBG 7s ease infinite;
   color: white;
@@ -42,7 +42,7 @@ body {
 }
 
 .top20Scores {
-  font-size: 40px;
+  font-size: 50px;
   font-weight: bold;
   text-align: center;
   margin-top: 10px;
@@ -69,13 +69,13 @@ body {
 .score-table {
   border-collapse: collapse;
   width: 600px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* Árnyék a táblának */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
   overflow: hidden;
 }
 
 .score-table th {
-  background: linear-gradient(90deg, #ffcc00, #a600d0a7); /* Fejléc színátmenet */
+  background: linear-gradient(90deg, #ffcc00, #a600d0a7);
   color: white;
   text-shadow: 1px 1px 2px black;
 }
@@ -83,12 +83,11 @@ body {
 
 
 .score-table th, .score-table td {
-  border: 2px solid #502378;
+  border: 2px solid #863ac8;
   padding: 5px;
   text-align: center;
 }
 
-/* Váltakozó sorok */
 .score-table tbody tr:nth-child(even) {
   background-color: rgba(255, 255, 255, 0.05);
 }
@@ -114,8 +113,6 @@ body {
   font-weight: bold;
 }
 
-
-/* Animált beszivárgás */
 .score-table tbody tr {
   opacity: 0;
   transform: translateY(10px);

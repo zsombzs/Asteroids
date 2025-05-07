@@ -17,16 +17,18 @@ class Asteroid extends CircleShape {
             this.image.width = radius * 2;
             this.image.height = radius * 2;
         };
+        this.hitboxOffset = { x: 0, y: theme === 'ocean' ? -4 : 0 };
         this.setHitbox();
     }
 
     draw(ctx) {
+        const scale = theme === 'ocean' ? 1.7 : 1;
         ctx.drawImage(
             this.image,
-            this.position.x - this.radius,
-            this.position.y - this.radius,
-            this.radius * 2,
-            this.radius * 2
+            this.position.x - this.radius * scale,
+            this.position.y - this.radius * scale,
+            this.radius * 2 * scale,
+            this.radius * 2 * scale
         );
 /*             const hitboxX = this.position.x + (this.hitboxOffset?.x || 0);
             const hitboxY = this.position.y + (this.hitboxOffset?.y || 0);
@@ -35,9 +37,9 @@ class Asteroid extends CircleShape {
             ctx.strokeStyle = 'red';
             ctx.lineWidth = 1;
             ctx.arc(hitboxX, hitboxY, this.hitboxRadius, 0, Math.PI * 2);
-            ctx.stroke(); */
+            ctx.stroke();
 
-/*     ctx.fillStyle = 'lime';
+    ctx.fillStyle = 'lime';
     ctx.font = '12px Arial';
     ctx.textAlign = 'center';
     ctx.fillText(`r: ${this.radius}`, this.position.x, this.position.y - this.radius - 10); */
@@ -63,6 +65,9 @@ class Asteroid extends CircleShape {
             this.hitboxRadius = 91;
         } else {
             this.hitboxRadius = this.radius * 0.75;
+        }
+        if (theme === 'ocean') {
+            this.hitboxRadius *= 1.24;
         }
     }
     
