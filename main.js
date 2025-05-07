@@ -1,3 +1,6 @@
+export const urlParams = new URLSearchParams(window.location.search);
+export const theme = urlParams.get('theme') || 'space'; // alapértelmezett: 'space'
+
 import { Player } from './player.js';
 import { AsteroidField } from './asteroidfield.js';
 import { Shot } from './shot.js';
@@ -5,6 +8,9 @@ import { Asteroid } from './asteroid.js';
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from './constants.js';
 import { supabase } from './supabase.js';
 import { PowerUp } from "./powerup.js";
+
+document.body.style.backgroundImage = `url('themes/${theme}/background.jpg')`;
+
 
 let canvas = document.getElementById('gameCanvas');
 let ctx = canvas.getContext('2d');
@@ -70,7 +76,7 @@ function updateScoreFromHitbox(hitboxRadius) {
 }
 
 let powerUpImage = new Image();
-powerUpImage.src = "images/boost.png";
+powerUpImage.src = `themes/${theme}/boost.png`;
 
 function gameLoop() {
     let now = Date.now();
@@ -256,7 +262,7 @@ function gameLoop() {
 
 let lastTime = Date.now();
 let backgroundImage = new Image();
-backgroundImage.src = 'images/background.jpg';
+backgroundImage.src = `themes/${theme}/background.jpg`;
 
 const radius = 23
 

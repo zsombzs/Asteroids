@@ -3,6 +3,7 @@ import { PLAYER_SHOOT_SPEED } from "./constants.js";
 import { Shot } from "./shot.js"
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "./constants.js";
 import { powerUps, drawable } from "./main.js"
+import { theme } from "./main.js"
 
 class Player extends CircleShape {
     
@@ -14,7 +15,7 @@ class Player extends CircleShape {
         this.drawable = drawable;
         this.shots = shots;
         this.image = new Image();
-        this.image.src = "images/spaceship.png";
+        this.image.src = `themes/${theme}/spaceship.png`;
         this.image.onload = () => {
             this.imageLoaded = true;
         };

@@ -1,49 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zsasteroids</title>
-    <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-image: url('images/background.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    #gameCanvas {
-      display: block;
-      border: 3px solid rgb(84, 15, 15);
-    }
-    #restartButton {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 24px;
-    padding: 10px 20px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    }
-
-    #restartButton:hover {
-    background-color: darkred;
-    }
-
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zsasteroids</title>
+  <link rel="stylesheet" href="main_website.css" />
 </head>
 <body>
-    <button id="restartButton" style="display: none;">RESTART</button>
-    <canvas id="gameCanvas" width="800" height="600" style="image-rendering: pixelated;"></canvas>
-    <script type="module" src="main.js"></script>
+  <h1 class="zsasteroids">Zsasteroids</h1>
+  <h2 class="top20Scores">Top 20 High Scores</h2>
+  <div id="score-container">
+    <div id="first-column">
+      <table class="score-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody id="score-col-1"></tbody>
+      </table>
+    </div>
+    <div id="second-column">
+      <table class="score-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody id="score-col-2"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="theme-selection">
+    <button onclick="location.href='space.html?theme=space'">🚀 Space</button>
+    <button onclick="location.href='space.html?theme=space'">...</button>
+    <button onclick="location.href='space.html?theme=space'">...</button>
+    <button onclick="location.href='space.html?theme=space'">...</button>
+  </div>
+
+  <script type="module" src="main_supabase.js"></script>
 </body>
 </html>

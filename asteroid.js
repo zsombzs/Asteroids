@@ -1,6 +1,7 @@
 import { CircleShape } from './circleshape.js';
 import { ASTEROID_MIN_RADIUS } from './constants.js';
 import { Player } from "./player.js"
+import { theme } from "./main.js"
 
 class Asteroid extends CircleShape {
     constructor(x, y, radius, updatable, drawable, asteroids) {
@@ -11,7 +12,7 @@ class Asteroid extends CircleShape {
         this.asteroids = asteroids;
 
         this.image = new Image();
-        this.image.src = 'images/asteroid.png';
+        this.image.src = `themes/${theme}/asteroid.png`;
         this.image.onload = () => {
             this.image.width = radius * 2;
             this.image.height = radius * 2;

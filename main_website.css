@@ -1,0 +1,168 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #0d1b2a;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: linear-gradient(-45deg, #0a0f1c, #0d1b2a, #1b263b, #0a0f1c);
+  background-size: 800% 800%;
+  animation: gradientBG 7s ease infinite;
+  color: white;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.zsasteroids {
+  font-size: 90px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  background: linear-gradient(270deg, yellow, rgb(165, 2, 165), yellow);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.top20Scores {
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: linear-gradient(270deg, rgb(165, 2, 165), yellow, rgb(165, 2, 165));
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+#score-container {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 40px;
+}
+
+.score-table {
+  border-collapse: collapse;
+  width: 600px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* Árnyék a táblának */
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.score-table th {
+  background: linear-gradient(90deg, #ffcc00, #a600d0a7); /* Fejléc színátmenet */
+  color: white;
+  text-shadow: 1px 1px 2px black;
+}
+
+
+
+.score-table th, .score-table td {
+  border: 2px solid #502378;
+  padding: 5px;
+  text-align: center;
+}
+
+/* Váltakozó sorok */
+.score-table tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.score-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.01);
+  transition: 0.2s;
+}
+
+.gold td {
+  color: gold;
+  font-weight: bold;
+}
+
+.silver td {
+  color: rgb(155, 155, 155);
+  font-weight: bold;
+}
+
+.bronze td {
+  color: #cd7f32;
+  font-weight: bold;
+}
+
+
+/* Animált beszivárgás */
+.score-table tbody tr {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.5s forwards;
+}
+
+.score-table tbody tr:nth-child(odd) {
+  animation-delay: 0.05s;
+}
+
+.score-table tbody tr:nth-child(even) {
+  animation-delay: 0.1s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.theme-selection {
+  text-align: center;
+}
+
+.theme-selection button {
+  display: inline-block;
+  margin: 0 60px;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #ffcc00, #a600d0a7);
+  border: 2px solid #863ac8;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px black;
+  transition: all 0.3s ease;
+}
+
+.theme-selection button:hover {
+  background: linear-gradient(90deg, #a600d0a7, #00ffcc);
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.theme-selection button:active {
+  transform: scale(0.95);
+}

@@ -1,10 +1,10 @@
 import { CircleShape } from "./circleshape.js";
-
+import { theme } from "./main.js";
 class PowerUp extends CircleShape {
     constructor(x, y) {
         super(x, y, 23, 21);
         this.image = new Image();
-        this.image.src = "images/boost.png";
+        this.image.src = `themes/${theme}/boost.png`;
         this.imageLoaded = false;
         this.image.onload = () => {
             this.imageLoaded = true;
