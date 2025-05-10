@@ -153,12 +153,6 @@ function gameLoop() {
             ctx.fillText("Final Score: " + score, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 50);
             ctx.restore();
 
-            if (!scoreSubmitted) {
-                saveScore(score);
-                scoreSubmitted = true;
-                fetchTopScores();
-            }
-
             restartButton.style.display = "block";
         }
     } else {
@@ -172,6 +166,11 @@ function gameLoop() {
         if (timeRemaining <= 0) {
             gameOver = true;
             gameOverTime = Date.now();
+            if (!scoreSubmitted) {
+                saveScore(score);
+                scoreSubmitted = true;
+                fetchTopScores();
+            }
         }
         updatable.forEach(object => object.update(dt));
 
@@ -181,6 +180,11 @@ function gameLoop() {
 /*                 console.log("Game over!"); */
                 gameOver = true;
                 gameOverTime = Date.now();
+                if (!scoreSubmitted) {
+                    saveScore(score);
+                    scoreSubmitted = true;
+                    fetchTopScores();
+                }
                 break;
             }
 
