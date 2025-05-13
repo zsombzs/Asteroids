@@ -167,10 +167,15 @@ function gameLoop() {
             gameOver = true;
             gameOverTime = Date.now();
             if (!scoreSubmitted) {
-                saveScore(score);
-                scoreSubmitted = true;
-                fetchTopScores();
-            }
+                if (score >= topThreeThreshold) {
+                    promptForNameAndSave(score);
+                  } else {
+                    saveScore(score);
+                  }
+                
+                  scoreSubmitted = true;
+                  fetchTopScores();
+                }
         }
         updatable.forEach(object => object.update(dt));
 
@@ -181,9 +186,15 @@ function gameLoop() {
                 gameOver = true;
                 gameOverTime = Date.now();
                 if (!scoreSubmitted) {
-                    saveScore(score);
-                    scoreSubmitted = true;
-                    fetchTopScores();
+                    if (score >= topThreeThreshold) {
+                        promptForNameAndSave(score);
+                      } else {
+                        saveScore(score);
+                      }
+                    
+                      scoreSubmitted = true;
+                      fetchTopScores();
+                    
                 }
                 break;
             }
@@ -258,7 +269,6 @@ function gameLoop() {
         let scoreText = entry.score.toString();
     
         ctx.fillText(indexText, SCREEN_WIDTH - 50, startY + index * padding);
-        
         ctx.fillText(scoreText, SCREEN_WIDTH -10, startY + index * padding);
     });
     
@@ -330,13 +340,54 @@ async function saveScore(score) {
     await supabase.from('scores').insert([{ score }]);
 }
 
+let topThreeThreshold = Infinity;
+
 async function fetchTopScores() {
     const { data, error } = await supabase
         .from('scores')
         .select('score')
         .order('score', { ascending: false })
         .limit(10);
-    if (!error) {
-        highScores = data;
-    }
+        if (!error && data) {
+            highScores = data;
+            if (data.length >= 5) {
+                topThreeThreshold = data[4].score;
+            } else {
+                topThreeThreshold = -1;
+            }
+        } else {
+            console.error('Failed to fetch scores:', error);
+        }
 }
+
+async function promptForNameAndSave(score) {
+    if (score > topThreeThreshold) {
+        const modal = document.getElementById("nameModal");
+        const input = document.getElementById("playerNameInput");
+        const submitButton = document.getElementById("submitNameButton");
+        const cancelButton = document.getElementById("cancelNameButton");
+      
+        modal.style.display = "flex";
+        input.value = "";
+        input.focus();
+      
+        submitButton.onclick = async () => {
+            const name = input.value.trim().slice(0, 8);
+            const finalName = name === "" ? null : name;
+      
+            await supabase.from('scores').insert([{ score, name: finalName }]);
+      
+            modal.style.display = "none";
+            fetchTopScores();
+        };
+        cancelButton.onclick = async () => {
+            const finalName = "Anonymous";
+            await supabase.from('scores').insert([{ score, name: finalName }]);
+            modal.style.display = "none";
+            fetchTopScores();
+        };
+    } else {
+        await saveScore(score);
+    }
+  }
+

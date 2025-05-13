@@ -7,7 +7,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 async function fetchTopScores() {
   const { data, error } = await supabase
     .from('scores')
-    .select('score')
+    .select('score, name')
     .order('score', { ascending: false })
     .limit(20);
 
@@ -24,11 +24,19 @@ async function fetchTopScores() {
 
   data.forEach((entry, index) => {
     const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${index + 1}</td>
-      <td>${entry.score}</td>
-    `;
+    const nameToShow = entry.name ? entry.name : 'Anonymous';
 
+    if (index < 5) {
+      row.innerHTML = `
+        <td>${index + 1} - ${nameToShow}</td>
+        <td>${entry.score}</td>
+      `;
+    } else {
+      row.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${entry.score}</td>
+      `;
+    }
     if (index < 10) {
       col1.appendChild(row);
     } else {
