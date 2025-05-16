@@ -1,10 +1,11 @@
 import { CircleShape } from './circleshape.js';
 import { SHOT_RADIUS } from './constants.js';
-import { theme } from "./main.js"
+import { theme } from "./main.js";
 
 class Shot extends CircleShape {
     constructor(x, y) {
         super(x, y, SHOT_RADIUS);
+        
     }
 
     draw(ctx) {
@@ -12,6 +13,8 @@ class Shot extends CircleShape {
         ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
         if (theme === "ocean") {
             ctx.fillStyle = 'yellow';
+        } else if (theme === "jungle") {
+            ctx.fillStyle = 'rgb(43, 255, 5)';
         } else {
             ctx.fillStyle = 'red';
         }

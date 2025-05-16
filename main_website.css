@@ -10,16 +10,42 @@ body {
   margin: 0;
   padding: 0;
   height: 100vh;
-  background: linear-gradient(-45deg, #0a0f1c, #152b43, #31466c, #0a0f1c);
+  background: linear-gradient(-45deg, #0a0f1c, #0d1225, #0e182a, #051336);
   background-size: 800% 800%;
   animation: gradientBG 7s ease infinite;
   color: white;
+  position: relative;
+  z-index: 0;
 }
 
 @keyframes gradientBG {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+.background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -10;
+}
+
+.floating-image {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  will-change: transform;
+  pointer-events: none;
+  z-index: -10;
+}
+
+.zsasteroids, .top20Scores, .score-table, .theme-button, .social-buttons {
+  position: relative;
+  z-index: 1;
 }
 
 .zsasteroids {
@@ -64,6 +90,8 @@ body {
   justify-content: center;
   gap: 5px;
   margin-bottom: 40px;
+  position: relative;
+  z-index: 100; 
 }
 
 .score-table {
@@ -72,6 +100,9 @@ body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
   overflow: hidden;
+  position: relative;
+  z-index: 101;
+  background-color: rgba(13, 27, 42, 0.92);
 }
 
 .score-table th {
@@ -140,14 +171,14 @@ body {
   text-align: center;
 }
 
-.theme-selection button {
+.theme-button {
   display: inline-block;
   margin: 0 60px;
   padding: 10px 20px;
   font-size: 18px;
   cursor: pointer;
-  background: linear-gradient(90deg, #ffcc00, #a600d0a7);
-  border: 2px solid #863ac8;
+  background-size: cover;
+  background-position: center;
   border-radius: 5px;
   color: white;
   font-weight: bold;
@@ -155,15 +186,64 @@ body {
   transition: all 0.3s ease;
 }
 
-.theme-selection button:hover {
-  background: linear-gradient(90deg, #a600d0a7, #00ffcc);
+.space-button {
+  background-image: url('themes/space/background.jpg');
+  border: 2px solid #5a0202;
+  box-shadow: 0 0 15px #860000;
+  animation: glow_space 2s infinite alternate;
+}
+
+@keyframes glow_space {
+  from {
+    box-shadow: 0 0 5px #860000;
+  }
+  to {
+    box-shadow: 0 0 20px #aa2222;
+  }
+}
+
+.ocean-button {
+  background-image: url('themes/ocean/background.jpg');
+  border: 2px solid rgb(74, 133, 97);
+  box-shadow: 0 0 15px rgb(96, 173, 125);
+  animation: glow_ocean 2s infinite alternate;
+}
+
+@keyframes glow_ocean {
+    from {
+      box-shadow: 0 0 5px rgb(96, 173, 125);
+    }
+    to {
+      box-shadow: 0 0 20px rgb(110, 198, 144);
+    }
+  }
+
+.jungle-button {
+  background-image: url('themes/jungle/background.jpg');
+  border: 2px solid rgb(31, 71, 46);
+  box-shadow: 0 0 15px rgb(31, 71, 46);
+  animation: glow_jungle 2s infinite alternate;
+}
+
+@keyframes glow_jungle {
+  from {
+    box-shadow: 0 0 5px rgb(31, 71, 46);
+  }
+  to {
+    box-shadow: 0 0 20px rgb(47, 112, 72);
+  }
+}
+
+.theme-button:hover {
+  filter: brightness(1.2);
   transform: scale(1.1);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
 
-.theme-selection button:active {
+.theme-button:active {
   transform: scale(0.95);
 }
+
 
 .theme-label {
   font-size: 28px;

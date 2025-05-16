@@ -22,7 +22,14 @@ class Asteroid extends CircleShape {
     }
 
     draw(ctx) {
-        const scale = theme === 'ocean' ? 1.7 : 1;
+        let scale;
+        if (theme === 'ocean') {
+          scale = 1.7;
+        } else if (theme === 'jungle') {
+          scale = 1.27;
+        } else {
+          scale = 1;
+        }
         ctx.drawImage(
             this.image,
             this.position.x - this.radius * scale,
@@ -42,8 +49,8 @@ class Asteroid extends CircleShape {
     ctx.fillStyle = 'lime';
     ctx.font = '12px Arial';
     ctx.textAlign = 'center';
-    ctx.fillText(`r: ${this.radius}`, this.position.x, this.position.y - this.radius - 10); */
-
+    ctx.fillText(`r: ${this.radius}`, this.position.x, this.position.y - this.radius - 10);
+ */
     ctx.restore();
     }
 

@@ -78,8 +78,23 @@ function updateScoreFromHitbox(hitboxRadius) {
 let powerUpImage = new Image();
 powerUpImage.src = `themes/${theme}/boost.png`;
 
-const textColor = theme === 'ocean' ? '#f3f3b6' : 'red';
-const timeColor = theme === 'ocean' ? 'white' : 'white';
+let textColor;
+if (theme === 'ocean') {
+  textColor = '#f3f3b6';
+} else if (theme === 'jungle') {
+  textColor = 'rgb(251, 213, 42)';
+} else {
+  textColor = 'red';
+}
+
+let timeColor;
+if (theme === 'ocean') {
+  timeColor = 'white';
+} else if (theme === 'jungle') {
+  timeColor = 'white';
+} else {
+  timeColor = 'white';
+}
 
 function gameLoop() {
     let now = Date.now();
@@ -175,7 +190,7 @@ function gameLoop() {
                 
                   scoreSubmitted = true;
                   fetchTopScores();
-                }
+            }
         }
         updatable.forEach(object => object.update(dt));
 
@@ -336,6 +351,12 @@ restartButton.addEventListener("click", () => {
     restartGame();
 });
 
+document.addEventListener("keydown", (event) => {
+    if (event.code === "Space" && gameOver && !isNamePromptActive) {
+        restartGame();
+    }
+});
+
 async function saveScore(score) {
     await supabase.from('scores').insert([{ score }]);
 }
@@ -360,6 +381,8 @@ async function fetchTopScores() {
         }
 }
 
+let isNamePromptActive = false;
+
 async function promptForNameAndSave(score) {
     if (score > topThreeThreshold) {
         const modal = document.getElementById("nameModal");
@@ -367,6 +390,7 @@ async function promptForNameAndSave(score) {
         const submitButton = document.getElementById("submitNameButton");
         const cancelButton = document.getElementById("cancelNameButton");
       
+        isNamePromptActive = true
         modal.style.display = "flex";
         input.value = "";
         input.focus();
@@ -376,14 +400,15 @@ async function promptForNameAndSave(score) {
             const finalName = name === "" ? null : name;
       
             await supabase.from('scores').insert([{ score, name: finalName }]);
-      
             modal.style.display = "none";
+            isNamePromptActive = false;
             fetchTopScores();
         };
         cancelButton.onclick = async () => {
             const finalName = "Anonymous";
             await supabase.from('scores').insert([{ score, name: finalName }]);
             modal.style.display = "none";
+            isNamePromptActive = false;
             fetchTopScores();
         };
     } else {
