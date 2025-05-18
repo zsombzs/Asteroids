@@ -10,7 +10,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100vh;
-  background: linear-gradient(-45deg, #0a0f1c, #0d1225, #0e182a, #051336);
+  background: linear-gradient(-45deg, #060911, #0c1122, #0c1525, #030c22);
   background-size: 800% 800%;
   animation: gradientBG 7s ease infinite;
   color: white;
@@ -54,7 +54,7 @@ body {
   text-align: center;
   margin-top: 15px;
   margin-bottom: 20px;
-  background: linear-gradient(270deg, yellow, rgb(165, 2, 165), yellow);
+  background: linear-gradient(270deg, #4f7bd8,#253c6f, #fca211cf, #e5e5e5de, #ffffffa7);
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -73,7 +73,7 @@ body {
   text-align: center;
   margin-top: 10px;
   margin-bottom: 10px;
-  background: linear-gradient(270deg, rgb(165, 2, 165), yellow, rgb(165, 2, 165));
+  background: linear-gradient(270deg, #ffffffa7, #e5e5e5de, #fca211cf, #253c6f, #4f7bd8);
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -89,7 +89,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 5px;
-  margin-bottom: 40px;
+  margin-bottom:10px;
   position: relative;
   z-index: 100; 
 }
@@ -106,15 +106,16 @@ body {
 }
 
 .score-table th {
-  background: linear-gradient(90deg, #ffcc00, #a600d0a7);
-  color: white;
+  background: linear-gradient(90deg,#253c6f, #fca211cf, #e5e5e5de);
+  color: rgb(255, 255, 255);
   text-shadow: 1px 1px 2px black;
 }
 
 
 
 .score-table th, .score-table td {
-  border: 2px solid #863ac8;
+  width: 150px;
+  border: 2px solid rgb(56, 56, 57);
   padding: 5px;
   text-align: center;
   vertical-align: middle;
@@ -166,6 +167,24 @@ body {
   }
 }
 
+.theme-selection {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.theme-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.theme-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
 
 .theme-selection {
   text-align: center;
@@ -251,7 +270,7 @@ body {
   text-align: center;
   margin-top: 10px;
   margin-bottom: 10px;
-  background: linear-gradient(270deg, rgb(165, 2, 165), yellow, rgb(165, 2, 165));
+  background: linear-gradient(270deg, #ffffffa7, #e5e5e5de, #fca211cf, #253c6f, #4f7bd8);
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -308,3 +327,81 @@ body {
   box-shadow: 0 6px 12px rgb(255, 255, 255, 0.5);
 }
 
+#info-icon {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #fca211cf, #999999de);
+  color: #ffffff;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#info-icon:hover {
+  transform: scale(1.3);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1001;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal:target {
+  display: flex;
+}
+
+.modal-content {
+  background: linear-gradient(45deg, #253c6f, #4d4a4ade);
+  background-size: 300% 300%;
+  animation: gradientShift 10s ease infinite;
+  color: #f1f2f6;
+  padding: 30px;
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+  font-size: 19px;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.6),
+              0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.close-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #cf8104e9;
+  color: #ffffff;
+  border: 2px solid white;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  background-color: #fcd18ccf;
+}

@@ -255,7 +255,7 @@ function gameLoop() {
     ctx.fillStyle = textColor;
     ctx.font = '14px Arial';
     ctx.textAlign = 'left';
-    ctx.fillText('W = forward   A = rotate left   D = rotate right   S = backward   SPACE = shoot', 10, SCREEN_HEIGHT - 10);
+    ctx.fillText('W = forward   A = rotate left   D = rotate right   S = backward   SPACE = shoot, restart', 10, SCREEN_HEIGHT - 10);
     ctx.restore();
 
     const iconSize = 20;
