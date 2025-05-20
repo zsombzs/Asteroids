@@ -6,11 +6,16 @@
   <title>Zsasteroids</title>
   <link rel="stylesheet" href="main_website.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="images/zsasteroids_icon_no_bg.png" />
 
 </head>
 <body>
   <h1 class="zsasteroids">Zsasteroids</h1>
-  <h2 class="top20Scores">Top 20 High Scores</h2>
+  <div class="top20-container">
+    <img src="images/zsasteroids_icon_no_bg.png" alt="Left Icon" class="left-image" />
+    <h2 class="top20Scores">Top 20 High Scores</h2>
+    <img src="images/zsasteroids_icon_no_bg.png" alt="Right Icon" class="right-image" />
+  </div>
   <div id="score-container">
     <div id="first-column">
       <table class="score-table">
@@ -22,6 +27,9 @@
         </thead>
         <tbody id="score-col-1"></tbody>
       </table>
+      <div id="total-games" class="total-info">
+        Loading total games played...
+      </div>
     </div>
     <div id="second-column">
       <table class="score-table">
@@ -33,9 +41,11 @@
         </thead>
         <tbody id="score-col-2"></tbody>
       </table>
+      <div id="total-scores" class="total-info">
+        Loading total scores...
+      </div>
     </div>
   </div>
-
   <div class="theme-selection">
     <div class="theme-header">
       <span class="theme-label">Choose a theme to play:</span>

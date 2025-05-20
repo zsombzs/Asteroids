@@ -2,20 +2,27 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #0d1b2a;
+  background-color: #060911;
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
 body {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   background: linear-gradient(-45deg, #060911, #0c1122, #0c1525, #030c22);
   background-size: 800% 800%;
   animation: gradientBG 7s ease infinite;
   color: white;
   position: relative;
   z-index: 0;
+  background: radial-gradient(circle, #060911, #0c1122, #0c1525);
+  transition: background 0.3s ease;
+}
+
+body:hover {
+  background: radial-gradient(circle, #0c1525, #0c1122, #060911);
 }
 
 @keyframes gradientBG {
@@ -41,6 +48,19 @@ body {
   will-change: transform;
   pointer-events: none;
   z-index: -10;
+  animation: move 10s linear infinite;
+}
+
+@keyframes move {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(50px, -50px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
 
 .zsasteroids, .top20Scores, .score-table, .theme-button, .social-buttons {
@@ -49,11 +69,11 @@ body {
 }
 
 .zsasteroids {
-  font-size: 90px;
+  font-size: 120px;
   font-weight: bold;
   text-align: center;
-  margin-top: 15px;
-  margin-bottom: 20px;
+  margin-top: 25px;
+  margin-bottom: 10px;
   background: linear-gradient(270deg, #4f7bd8,#253c6f, #fca211cf, #e5e5e5de, #ffffffa7);
   background-size: 300% 300%;
   -webkit-background-clip: text;
@@ -67,17 +87,31 @@ body {
   100% { background-position: 0% 50%; }
 }
 
+.top20-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 45px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .top20Scores {
   font-size: 50px;
   font-weight: bold;
   text-align: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
   background: linear-gradient(270deg, #ffffffa7, #e5e5e5de, #fca211cf, #253c6f, #4f7bd8);
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradientShift 15s ease infinite;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.left-image, .right-image {
+  width: 70px;
+  height: 70px;
 }
 
 @keyframes gradientShift {
@@ -89,6 +123,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 5px;
+  margin-top: 10px;
   margin-bottom:10px;
   position: relative;
   z-index: 100; 
@@ -127,8 +162,9 @@ body {
 
 .score-table tbody tr:hover {
   background-color: rgba(255, 255, 255, 0.1);
-  transform: scale(1.01);
-  transition: 0.2s;
+  transform: scale(1.02) rotate(1deg);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .gold td {
@@ -167,6 +203,14 @@ body {
   }
 }
 
+.total-info {
+  text-align: center;
+  margin-top: 20px;
+  color: #fdbf5d;
+  font-weight: bold;
+  font-size: 26px;
+}
+
 .theme-selection {
   text-align: center;
   margin-top: 10px;
@@ -184,6 +228,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 20px;
+  margin-bottom: 30px;
 }
 
 .theme-selection {
@@ -194,7 +239,7 @@ body {
   display: inline-block;
   margin: 0 60px;
   padding: 10px 20px;
-  font-size: 18px;
+  font-size: 22px;
   cursor: pointer;
   background-size: cover;
   background-position: center;
@@ -203,6 +248,22 @@ body {
   font-weight: bold;
   text-shadow: 1px 1px 2px black;
   transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
 }
 
 .space-button {
@@ -281,11 +342,11 @@ body {
 
 
 .theme-label {
-  font-size: 28px;
+  font-size: 50px;
   font-weight: bold;
   text-align: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 20px;
+  margin-bottom: 30px;
   background: linear-gradient(270deg, #ffffffa7, #e5e5e5de, #fca211cf, #253c6f, #4f7bd8);
   background-size: 300% 300%;
   -webkit-background-clip: text;
@@ -294,10 +355,10 @@ body {
 }
 
 .social-buttons {
-  position: fixed;
-  bottom: 20px;
-  left: 100px;
-  right: 0px;
+  position: relative;
+  margin-bottom: 30px;
+  left: 30px;
+  margin-top: 70px;
   display: flex;
   justify-content: left;
   gap: 30px;
@@ -309,7 +370,7 @@ body {
   align-items: center;
   gap: 8px;
   padding: 10px 16px;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: bold;
   background-color: #000;
   color:#25F4EE;
@@ -327,8 +388,8 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  font-size: 18px;
   padding: 10px 16px;
-  font-size: 15px;
   font-weight: bold;
   color: white;
   background-color: #FF0000;
@@ -346,13 +407,13 @@ body {
 #info-icon {
   display: inline-block;
   margin-left: 10px;
-  font-size: 18px;
+  font-size: 25px;
   cursor: pointer;
   background: linear-gradient(90deg, #fca211cf, #999999de);
   color: #ffffff;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;

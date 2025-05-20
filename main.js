@@ -60,17 +60,24 @@ let timeRemaining = gameTime;
 
 let score = 0;
 
+let lastEarnedPoints = null;
+
 function updateScoreFromHitbox(hitboxRadius) {
 
     if (hitboxRadius > 71) {
+        lastEarnedPoints = 1;
         score += 1;
     } else if (hitboxRadius > 56 && hitboxRadius <= 71) {
+        lastEarnedPoints = 2;
         score += 2;
     } else if (hitboxRadius > 38.5 && hitboxRadius <= 56) {
+        lastEarnedPoints = 3;
         score += 3;
     } else if (hitboxRadius > 18 && hitboxRadius <= 38.5) {
+        lastEarnedPoints = 4;
         score += 4;
     } else if (hitboxRadius <= 18) {
+        lastEarnedPoints = 5;
         score += 5;
     }
 }
@@ -112,6 +119,10 @@ function gameLoop() {
     ctx.fillStyle = textColor;
     ctx.font = "48px Arial";
     ctx.textAlign = "center";
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+    ctx.shadowBlur = 15;
+    ctx.shadowOffsetX = 3;
+    ctx.shadowOffsetY = 3;
     ctx.fillText("Zsasteroids", canvas.width / 2, 50);
     ctx.restore();
 
@@ -119,8 +130,25 @@ function gameLoop() {
     ctx.fillStyle = textColor;
     ctx.font = '24px Arial';
     ctx.textAlign = 'right';
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+    ctx.shadowBlur = 15;
+    ctx.shadowOffsetX = 3;
+    ctx.shadowOffsetY = 3;
     ctx.fillText("Score: " + score, SCREEN_WIDTH - 10, 30);
     ctx.restore();
+
+    if (lastEarnedPoints !== null) {
+        ctx.save();
+        ctx.fillStyle = textColor;
+        ctx.font = '18px Arial';
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+        ctx.shadowBlur = 15;
+        ctx.shadowOffsetX = 3;
+        ctx.shadowOffsetY = 3;
+        ctx.textAlign = 'right';
+        ctx.fillText(`+${lastEarnedPoints} points`, SCREEN_WIDTH - 10, SCREEN_HEIGHT - 665);
+        ctx.restore();
+    }
 
     if (countdownRunning) {
         if (!countdownStarted) {
@@ -145,9 +173,17 @@ function gameLoop() {
             powerUpSpawnTime = gameStartTime + 5000;
         }
 
-        ctx.font = '74px Arial';
-        ctx.fillStyle = textColor;
-        ctx.fillText(displayText, SCREEN_WIDTH / 2 - ctx.measureText(displayText).width / 2, SCREEN_HEIGHT / 2);
+        ctx.save();
+        ctx.font = `74px Arial`;
+        ctx.fillStyle = '#ffffff'; // Fehér szín
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.8)'; // Árnyék színe
+        ctx.shadowBlur = 15; // Árnyék elmosódása
+        ctx.shadowOffsetX = 3; // Árnyék X irányú eltolása
+        ctx.shadowOffsetY = 3; // Árnyék Y irányú eltolása
+        ctx.fillText(displayText, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+        ctx.restore();
     } else if (gameOver) {
         if (!showGameOver) {
             showGameOver = true;
@@ -157,10 +193,15 @@ function gameLoop() {
         
         if (elapsedGameOver < 3) {
             ctx.save();
-            ctx.font = '74px Arial';
-            ctx.fillStyle = textColor;
+            const pulse = Math.sin(Date.now() / 400) * 1.3 + 74;
+            ctx.font = `${pulse}px Arial`;
+            ctx.fillStyle = '#ffffff';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+            ctx.shadowBlur = 15;
+            ctx.shadowOffsetX = 3;
+            ctx.shadowOffsetY = 3;
             ctx.fillText("GAME OVER", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
             ctx.restore();
             
@@ -240,6 +281,10 @@ function gameLoop() {
     ctx.fillStyle = timeColor;
     ctx.font = '20px Arial';
     ctx.textAlign = 'left';
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+    ctx.shadowBlur = 15;
+    ctx.shadowOffsetX = 3;
+    ctx.shadowOffsetY = 3;
     ctx.fillText(`Time left: ${Math.ceil(timeRemaining)}s`, 20, 30);
     ctx.restore();
 
@@ -249,6 +294,10 @@ function gameLoop() {
         if (remaining > 0) {
             ctx.fillStyle = timeColor;
             ctx.font = "18px Arial";
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+            ctx.shadowBlur = 15;
+            ctx.shadowOffsetX = 3;
+            ctx.shadowOffsetY = 3;
             ctx.fillText(`Power-up time: ${remaining.toFixed(1)}s`, 21, 60);
         } else {
             player.powerUpEndTime = null;
@@ -259,6 +308,10 @@ function gameLoop() {
     ctx.fillStyle = textColor;
     ctx.font = '14px Arial';
     ctx.textAlign = 'left';
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+    ctx.shadowBlur = 15;
+    ctx.shadowOffsetX = 3;
+    ctx.shadowOffsetY = 3;
     ctx.fillText('W = forward   A = rotate left   D = rotate right   S = backward   SPACE = shoot, restart', 10, SCREEN_HEIGHT - 10);
     ctx.restore();
 
@@ -271,11 +324,19 @@ function gameLoop() {
 
     ctx.font = "14px Arial";
     ctx.fillStyle = textColor;
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+    ctx.shadowBlur = 15;
+    ctx.shadowOffsetX = 3;
+    ctx.shadowOffsetY = 3;
     ctx.fillText("- Power-Up: Doubles speed and fire rate", iconX + iconSize + 10, iconY + 15);
 
     ctx.save();
     ctx.fillStyle = textColor;
     ctx.font = '18px Arial';
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+    ctx.shadowBlur = 15;
+    ctx.shadowOffsetX = 3;
+    ctx.shadowOffsetY = 3;
     ctx.textAlign = 'right';
 
     ctx.fillText("Top Scores:", SCREEN_WIDTH - 10, SCREEN_HEIGHT - 450);
@@ -287,6 +348,10 @@ function gameLoop() {
         let indexText = `${index + 1}.`;
         let scoreText = entry.score.toString();
     
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+        ctx.shadowBlur = 15;
+        ctx.shadowOffsetX = 3;
+        ctx.shadowOffsetY = 3;
         ctx.fillText(indexText, SCREEN_WIDTH - 50, startY + index * padding);
         ctx.fillText(scoreText, SCREEN_WIDTH -10, startY + index * padding);
     });

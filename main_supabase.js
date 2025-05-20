@@ -54,3 +54,43 @@ async function fetchTopScores() {
 }
 
 fetchTopScores();
+
+async function fetchTotalGames() {
+  const { count, error } = await supabase
+    .from('scores')
+    .select('*', { count: 'exact' });
+
+  if (error) {
+    console.error('Error fetching total games:', error);
+    return 0;
+  }
+
+  return count;
+}
+
+async function fetchTotalScore() {
+  const { data, error } = await supabase
+    .from('scores')
+    .select('score', { count: 'exact' });
+
+  if (error) {
+    console.error('Error fetching total score:', error);
+    return 0;
+  }
+
+  const totalScore = data.reduce((sum, entry) => sum + entry.score, 0);
+  return totalScore;
+}
+
+async function displayTotalGamesAndScore() {
+  const totalGames = await fetchTotalGames();
+  const totalScore = await fetchTotalScore();
+
+  const totalGamesDiv = document.getElementById('total-games');
+  const totalScoresDiv = document.getElementById('total-scores');
+
+  totalGamesDiv.textContent = `Total games played: ${totalGames}`;
+  totalScoresDiv.textContent = `Total scores: ${totalScore}`;
+}
+
+document.addEventListener('DOMContentLoaded', displayTotalGamesAndScore);

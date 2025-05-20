@@ -11,6 +11,7 @@ const images = [
   'themes/ww2/boost.png',
   'themes/ww2/spaceship.png',
   'themes/ww2/asteroid.png',
+  'images/zsasteroids_icon_no_bg.png',
 ];
 
 function spawnRandomFlyingImage() {
