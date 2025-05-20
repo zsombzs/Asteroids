@@ -1,0 +1,131 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(96, 39, 17);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+      margin: 0;
+      padding: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    
+    #gameCanvas {
+      display: block;
+      border: 3px solid rgb(39, 39, 39);
+      box-shadow: 0 0 30px rgb(57, 57, 57);
+      image-rendering: pixelated;
+    }
+    
+    #restartButton {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+      padding: 10px 20px;
+      background-color: #c4a150;
+      color: rgb(0, 0, 0);
+      border: 2px, solid, black;
+      border-radius: 5px;
+      cursor: pointer;
+      display: none;
+    }
+    
+    #restartButton:hover {
+      background-color: #e6bf34;
+    }
+
+    #mainMenuButton {
+        position: absolute;
+        top: 10px;
+        left: 9px;
+        padding: 10px 12px;
+        background-color:#c4a150;
+        color: rgb(0, 0, 0);
+        border: 2px solid #000000;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+    }
+    #mainMenuButton:hover {
+        background-color: #e6bf34;
+    }
+    
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 20, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      font-family: 'Courier New', monospace;
+      transform: scale(1.2); 
+  }
+  
+  .modal-content {
+      background: rgb(143, 122, 102);
+      border: 2px solid rgb(102, 77, 51);
+      border-radius: 12px;
+      padding: 20px 30px;
+      box-shadow: 0 0 24px rgba(102, 77, 51, 0.5);
+      color: rgb(247, 247, 225);
+      text-align: center;
+      max-width: 480px;
+      width: 90%;
+      font-size: 24px;
+  }
+
+  .modal-content input[type="text"] {
+    margin-top: 18px;
+    margin-bottom: 18px;
+    padding: 12px 18px;
+    border: 1px solid rgb(102, 77, 51);
+    border-radius: 8px;
+    background-color: rgb(174, 151, 87);
+    color: rgb(247, 247, 225);
+    font-size: 24px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.modal-content small {
+    color: rgb(246, 222, 191);
+    font-size: 18px;
+}
+
+.modal-content button {
+    padding: 15px 30px;
+    background-color: rgb(174, 151, 87);
+    color: rgb(245, 245, 220);
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 18px;
+}
+
+.modal-content button:hover {
+    background-color: rgb(239, 195, 136);
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 18px;
+}

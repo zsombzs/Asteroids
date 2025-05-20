@@ -8,6 +8,9 @@ const images = [
   'themes/jungle/boost.png',
   'themes/jungle/spaceship.png',
   'themes/jungle/asteroid.png',
+  'themes/ww2/boost.png',
+  'themes/ww2/spaceship.png',
+  'themes/ww2/asteroid.png',
 ];
 
 function spawnRandomFlyingImage() {

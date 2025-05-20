@@ -26,11 +26,21 @@ class Player extends CircleShape {
     }
 
     draw(ctx) {
+        let scale;
+        if (theme === 'ocean') {
+          scale = 1;
+        } else if (theme === 'jungle') {
+          scale = 1;
+        } else if (theme === 'ww2') {
+            scale = 0.67;
+        } else {
+          scale = 1;
+        }
         if (this.imageLoaded) {
             ctx.save();
             ctx.translate(this.position.x, this.position.y);
             ctx.rotate(this.rotation * Math.PI / 180);
-            ctx.drawImage(this.image, -this.radius, -this.radius, this.radius * 2, this.radius * 2);
+            ctx.drawImage(this.image, -this.radius * scale, -this.radius * scale, this.radius * 2 * scale, this.radius * 2 * scale);
             ctx.restore();
         }
 /*              // Debug: kör hitbox kirajzolása

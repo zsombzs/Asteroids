@@ -27,6 +27,8 @@ class Asteroid extends CircleShape {
           scale = 1.7;
         } else if (theme === 'jungle') {
           scale = 1.27;
+        } else if (theme === 'ww2') {
+            scale = 0.965;
         } else {
           scale = 1;
         }
@@ -49,8 +51,8 @@ class Asteroid extends CircleShape {
     ctx.fillStyle = 'lime';
     ctx.font = '12px Arial';
     ctx.textAlign = 'center';
-    ctx.fillText(`r: ${this.radius}`, this.position.x, this.position.y - this.radius - 10);
- */
+    ctx.fillText(`r: ${this.radius}`, this.position.x, this.position.y - this.radius - 10); */
+
     ctx.restore();
     }
 

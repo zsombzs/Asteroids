@@ -253,6 +253,22 @@ body {
   }
 }
 
+.ww2-button {
+  background-image: url('themes/ww2/background.jpg');
+  border: 2px solid rgb(165, 78, 20);
+  box-shadow: 0 0 15px rgb(213, 105, 32);
+  animation: glow_ww2 2s infinite alternate;
+}
+
+@keyframes glow_ww2 {
+    from {
+      box-shadow: 0 0 5px rgb(213, 105, 32);
+    }
+    to {
+      box-shadow: 0 0 20px rgb(222, 122, 55);
+    }
+  }
+
 .theme-button:hover {
   filter: brightness(1.2);
   transform: scale(1.1);

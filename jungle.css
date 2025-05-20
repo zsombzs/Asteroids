@@ -35,7 +35,7 @@ html, body {
       padding: 10px 20px;
       background-color: rgb(167, 137, 7);
       color: rgb(0, 0, 0);
-      border: 2px, black;
+      border: 2px, solid, black;
       border-radius: 5px;
       cursor: pointer;
       display: none;
@@ -109,7 +109,7 @@ html, body {
       
       .modal-content button {
         padding: 14px 28px;
-        background-color: #bfa64b;
+        background-color: #ffeb99;
         color: #0e0e0e;
         border: none;
         border-radius: 8px;

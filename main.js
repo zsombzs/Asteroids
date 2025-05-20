@@ -83,17 +83,21 @@ if (theme === 'ocean') {
   textColor = '#f3f3b6';
 } else if (theme === 'jungle') {
   textColor = 'rgb(251, 213, 42)';
+} else if (theme === 'ww2') {
+    textColor = '#f7ede2';
 } else {
   textColor = 'red';
 }
 
 let timeColor;
 if (theme === 'ocean') {
-  timeColor = 'white';
+    timeColor = 'white';
 } else if (theme === 'jungle') {
-  timeColor = 'white';
+    timeColor = 'white';
+} else if (theme === 'ww2') {
+    timeColor = 'white';
 } else {
-  timeColor = 'white';
+    timeColor = 'white';
 }
 
 function gameLoop() {
