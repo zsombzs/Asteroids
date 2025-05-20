@@ -38,7 +38,8 @@ class Asteroid extends CircleShape {
             this.position.y - this.radius * scale,
             this.radius * 2 * scale,
             this.radius * 2 * scale
-        );
+            );
+
 /*             const hitboxX = this.position.x + (this.hitboxOffset?.x || 0);
             const hitboxY = this.position.y + (this.hitboxOffset?.y || 0);
             
