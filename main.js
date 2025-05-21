@@ -52,6 +52,7 @@ let countdownStartTime = 0;
 let countdownRunning = true;
 let showGameOver = false;
 let gameOverTime = 0;
+let gameOverReason = null;
 
 let gameTime = 60;
 let gameStartTime = 0;
@@ -84,6 +85,8 @@ function updateScoreFromHitbox(hitboxRadius) {
 
 let powerUpImage = new Image();
 powerUpImage.src = `themes/${theme}/boost.png`;
+let multishotImage = new Image();
+multishotImage.src = `themes/${theme}/multishot.png`;
 
 let textColor;
 if (theme === 'ocean') {
@@ -106,6 +109,9 @@ if (theme === 'ocean') {
 } else {
     timeColor = 'white';
 }
+
+let multishotSpawnTimes = [50, 30, 10];
+let spawnedMultishots = new Set();
 
 function gameLoop() {
     let now = Date.now();
@@ -175,13 +181,13 @@ function gameLoop() {
 
         ctx.save();
         ctx.font = `74px Arial`;
-        ctx.fillStyle = '#ffffff'; // Fehér szín
+        ctx.fillStyle = '#ffffff';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.8)'; // Árnyék színe
-        ctx.shadowBlur = 15; // Árnyék elmosódása
-        ctx.shadowOffsetX = 3; // Árnyék X irányú eltolása
-        ctx.shadowOffsetY = 3; // Árnyék Y irányú eltolása
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+        ctx.shadowBlur = 15;
+        ctx.shadowOffsetX = 3;
+        ctx.shadowOffsetY = 3;
         ctx.fillText(displayText, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
         ctx.restore();
     } else if (gameOver) {
@@ -202,7 +208,11 @@ function gameLoop() {
             ctx.shadowBlur = 15;
             ctx.shadowOffsetX = 3;
             ctx.shadowOffsetY = 3;
-            ctx.fillText("GAME OVER", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+            if (gameOverReason === "timeout") {
+                ctx.fillText("Time is up!", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+            } else if (gameOverReason === "collision") {
+                ctx.fillText("GAME OVER", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+            }
             ctx.restore();
             
         } else {
@@ -226,6 +236,7 @@ function gameLoop() {
         if (timeRemaining <= 0) {
             gameOver = true;
             gameOverTime = Date.now();
+            gameOverReason = "timeout";
             if (!scoreSubmitted) {
                 if (score >= topThreeThreshold) {
                     promptForNameAndSave(score);
@@ -245,6 +256,7 @@ function gameLoop() {
 /*                 console.log("Game over!"); */
                 gameOver = true;
                 gameOverTime = Date.now();
+                gameOverReason = "collision";
                 if (!scoreSubmitted) {
                     if (score >= topThreeThreshold) {
                         promptForNameAndSave(score);
@@ -271,6 +283,13 @@ function gameLoop() {
         }
 
         drawable.forEach(object => object.draw(ctx));
+
+        for (let spawnTime of multishotSpawnTimes) {
+            if (timeRemaining <= spawnTime && !spawnedMultishots.has(spawnTime)) {
+                spawnPowerUp("multishot");
+                spawnedMultishots.add(spawnTime);
+            }
+        }
 
         if (Date.now() >= powerUpSpawnTime) {
             spawnPowerUp();
@@ -304,6 +323,22 @@ function gameLoop() {
         }
     }
 
+    if (!gameOver && player.multishotEndTime) {
+        const remainingMultishotTime = (player.multishotEndTime - Date.now()) / 1000;
+    
+        if (remainingMultishotTime > 0) {
+            ctx.fillStyle = timeColor;
+            ctx.font = "18px Arial";
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+            ctx.shadowBlur = 15;
+            ctx.shadowOffsetX = 3;
+            ctx.shadowOffsetY = 3;
+            ctx.fillText(`Multishot time: ${remainingMultishotTime.toFixed(1)}s`, 21, 90);
+        } else {
+            player.multishotEndTime = null;
+        }
+    }
+
     ctx.save();
     ctx.fillStyle = textColor;
     ctx.font = '14px Arial';
@@ -329,6 +364,22 @@ function gameLoop() {
     ctx.shadowOffsetX = 3;
     ctx.shadowOffsetY = 3;
     ctx.fillText("- Power-Up: Doubles speed and fire rate", iconX + iconSize + 10, iconY + 15);
+
+    const multishotIconSize = 20;
+    const multishotIconX = 7;
+    const multishotIconY = canvas.height - 80;
+
+    if (multishotImage.complete) {
+        ctx.drawImage(multishotImage, multishotIconX, multishotIconY, multishotIconSize, multishotIconSize);
+    }
+
+    ctx.font = "14px Arial";
+    ctx.fillStyle = textColor;
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+    ctx.shadowBlur = 15;
+    ctx.shadowOffsetX = 3;
+    ctx.shadowOffsetY = 3;
+    ctx.fillText("- Multishot: Shoots 3 bullets at once", multishotIconX + multishotIconSize + 10, multishotIconY + 16);
 
     ctx.save();
     ctx.fillStyle = textColor;
@@ -367,10 +418,10 @@ backgroundImage.src = `themes/${theme}/background.jpg`;
 
 const radius = 23
 
-function spawnPowerUp() {
+function spawnPowerUp(type = "boost") {
     let x = Math.random() * (SCREEN_WIDTH - 2 * radius) + radius;
     let y = Math.random() * (SCREEN_HEIGHT - 2 * radius) + radius;
-    let p = new PowerUp(x, y);
+    let p = new PowerUp(x, y, type);
     powerUps.push(p);
     drawable.push(p);
     updatable.push(p);
@@ -407,6 +458,8 @@ function restartGame() {
     scoreSubmitted = false;
 
     gameStartTime = Date.now()
+
+    spawnedMultishots = new Set();
 
     restartButton.style.display = "none";
 

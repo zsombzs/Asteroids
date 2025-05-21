@@ -12,6 +12,11 @@ const images = [
   'themes/ww2/spaceship.png',
   'themes/ww2/asteroid.png',
   'images/zsasteroids_icon_no_bg.png',
+  'themes/space/multishot.png',
+  'themes/ocean/multishot.png',
+  'themes/jungle/multishot.png',
+  'themes/ww2/multishot.png',
+
 ];
 
 function spawnRandomFlyingImage() {
@@ -31,6 +36,10 @@ function spawnRandomFlyingImage() {
   if (img.src.endsWith('boost.png')) {
       scaleValue = 0.7;
   }
+
+  if (img.src.endsWith('multishot.png')) {
+    scaleValue = 0.7;
+}
 
   // 0=bal, 1=jobb, 2=fent, 3=lent
   const side = Math.floor(Math.random() * 4);

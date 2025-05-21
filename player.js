@@ -23,6 +23,9 @@ class Player extends CircleShape {
         this.speedMultiplier = 1;
         this.shootTimerMultiplier = 1;
         this.powerUpTimeout = null
+
+        this.multishotActive = false;
+        this.multishotEndTime = null;
     }
 
     draw(ctx) {
@@ -60,6 +63,10 @@ class Player extends CircleShape {
     update(dt) {
         this.shootTimer -= dt;
 
+        if (this.multishotActive && Date.now() > this.multishotEndTime) {
+            this.multishotActive = false;
+        }
+
         if (window.keys['a']) {
             this.rotate(-300 * dt);
         }
@@ -92,9 +99,18 @@ class Player extends CircleShape {
             if (this.collidesWithCircle(powerUp)) {
                 powerUps.splice(index, 1);
                 drawable.splice(drawable.indexOf(powerUp), 1);
-                this.activatePowerUp();
+                if (powerUp.type === "boost") {
+                    this.activatePowerUp();
+                } else if (powerUp.type === "multishot") {
+                    this.activateMultishot();
+                }
             }
         });
+        
+        if (this.multishotActive && this.multishotEndTime && Date.now() > this.multishotEndTime) {
+            this.multishotActive = false;
+            this.multishotEndTime = null;
+        }
      }
     
 
@@ -107,17 +123,38 @@ class Player extends CircleShape {
     shoot() {
         if (this.shootTimer > 0) return;
         this.shootTimer = 0.3  * this.shootTimerMultiplier;;
-
-        let shot = new Shot(this.position.x, this.position.y);
         let forward = this.vector(0, -1).rotate(this.rotation);
-        shot.velocity = {
+
+        let shot1 = new Shot(this.position.x, this.position.y);
+        shot1.velocity = {
             x: forward.x * PLAYER_SHOOT_SPEED,
             y: forward.y * PLAYER_SHOOT_SPEED
         };
+        this.updatable.push(shot1);
+        this.drawable.push(shot1);
+        this.shots.push(shot1);
 
-        this.updatable.push(shot);
-        this.drawable.push(shot);
-        this.shots.push(shot);
+        if (this.multishotActive) {
+            let offsetLeft = this.vector(-10, 0).rotate(this.rotation);
+            let shot2 = new Shot(this.position.x + offsetLeft.x, this.position.y + offsetLeft.y);
+            shot2.velocity = {
+                x: forward.x * PLAYER_SHOOT_SPEED,
+                y: forward.y * PLAYER_SHOOT_SPEED
+            };
+            this.updatable.push(shot2);
+            this.drawable.push(shot2);
+            this.shots.push(shot2);
+            
+            let offsetRight = this.vector(10, 0).rotate(this.rotation);
+            let shot3 = new Shot(this.position.x + offsetRight.x, this.position.y + offsetRight.y);
+            shot3.velocity = {
+                x: forward.x * PLAYER_SHOOT_SPEED,
+                y: forward.y * PLAYER_SHOOT_SPEED
+            };
+            this.updatable.push(shot3);
+            this.drawable.push(shot3);
+            this.shots.push(shot3);
+        }
     }
 
     vector(x, y) {
@@ -167,6 +204,11 @@ class Player extends CircleShape {
             this.powerUpTimeout = null;
             this.powerUpEndTime = null;
         }, 8000);
+    }
+
+    activateMultishot() {
+        this.multishotActive = true;
+        this.multishotEndTime = Math.max(this.multishotEndTime, Date.now() + 8000);
     }
 }
 
