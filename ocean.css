@@ -38,7 +38,7 @@ html, body {
       left: -10px;
       transform: translateX(-100%);
       padding: calc(0.4rem + 0.2vw) calc(0.5rem + 0.5vw);
-      background-color:rgb(134, 216, 166);
+      background-color:#f3f3b6;
       color: rgb(0, 0, 0);
       border: 2px solid #000000;
       border-radius: 5px;
@@ -46,7 +46,7 @@ html, body {
       font-size: calc(1rem + 0.5vw);
     }
     #mainMenuButton:hover {
-        background-color: rgb(255, 174, 0);
+        background-color: rgb(250, 196, 80);
     }
 
     #restartButton {
@@ -54,18 +54,18 @@ html, body {
       top: 70%;
       left: 50%;
       transform: translate(-50%, 50%);
-      font-size: calc(2rem + 0.5vw);
-      padding: calc(0.5rem + 0.5vw) calc(1rem + 1vw);
+      font-size: calc(1.5rem + 0.5vw);
+      padding: calc(0.3rem + 0.5vw) calc(1rem + 1vw);
       background-color: #f3f3b6;
       color: rgb(0, 0, 0);
       border: 2px, solid, black;
-      border-radius: 5px;
+      border-radius: 10px;
       cursor: pointer;
       display: none;
     }
     
     #restartButton:hover {
-      background-color: rgb(255, 174, 0);
+      background-color: rgb(250, 196, 80);
     }
     
 .modal {

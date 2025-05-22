@@ -10,6 +10,6 @@ export const PLAYER_RADIUS = 24;
 export const PLAYER_TURN_SPEED = 300;
 export const PLAYER_SPEED = 220;
 
-export const SHOT_RADIUS = 5;
+export const SHOT_RADIUS = 7.5;
 export const PLAYER_SHOOT_SPEED = 500;
 export const PLAYER_SHOOT_COOLDOWN = 0.3;

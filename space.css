@@ -54,12 +54,12 @@ body {
   top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: calc(2rem + 0.5vw);
-  padding: calc(0.5rem + 0.5vw) calc(1rem + 1vw);
+  font-size: calc(1.5rem + 0.5vw);
+  padding: calc(0.3rem + 0.5vw) calc(1rem + 1vw);
   background-color: red;
   color: white;
   border: 2px, solid, black;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   display: none;
 }

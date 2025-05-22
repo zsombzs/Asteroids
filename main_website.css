@@ -60,7 +60,8 @@ body {
 }
 
 .zsasteroids {
-  font-size: calc(7vw + 20px);
+  font-family: 'Fenwick-Outline', sans-serif;
+  font-size: calc(8.5vw + 20px);
   font-weight: bold;
   text-align: center;
   margin-top: 2vh;
@@ -76,6 +77,12 @@ body {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+@font-face {
+  font-family: 'Fenwick-Outline';
+  src: url('./fonts/Fenwick-Outline.woff2') format('woff2'),
+       url('./fonts/Fenwick-Outline.woff') format('woff'),
 }
 
 .top20-container {
@@ -297,14 +304,14 @@ body {
 
 .ww2-button {
   background-image: url('themes/ww2/background.jpg');
-  border: 2px solid rgb(165, 78, 20);
-  box-shadow: 0 0 15px rgb(213, 105, 32);
+  border: 2px solid rgb(123, 59, 17);
+  box-shadow: 0 0 15px rgb(138, 69, 22);
   animation: glow_ww2 2s infinite alternate;
 }
 
 @keyframes glow_ww2 {
     from {
-      box-shadow: 0 0 5px rgb(213, 105, 32);
+      box-shadow: 0 0 5px rgb(137, 67, 20);
     }
     to {
       box-shadow: 0 0 20px rgb(222, 122, 55);

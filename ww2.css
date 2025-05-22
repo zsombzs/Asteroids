@@ -27,8 +27,8 @@ html, body {
     
     #gameCanvas {
       display: block;
-      border: 0.2vw solid rgb(39, 39, 39);
-      box-shadow: 0 0 2vw rgb(57, 57, 57);
+      border: 0.2vw solid #828282;
+      box-shadow: 0 0 3vw #727272;
       image-rendering: pixelated;
     }
 
@@ -38,7 +38,7 @@ html, body {
         left: -10px;
         transform: translateX(-100%);
         padding: calc(0.4rem + 0.2vw) calc(0.5rem + 0.5vw);
-        background-color:#c4a150;
+        background-color:#828282;
         color: rgb(0, 0, 0);
         border: 2px solid #000000;
         border-radius: 5px;
@@ -46,7 +46,7 @@ html, body {
         font-size: calc(1rem + 0.5vw);
     }
     #mainMenuButton:hover {
-        background-color: #e6bf34;
+        background-color: #cfcfcf;
     }
 
     #restartButton {
@@ -54,18 +54,18 @@ html, body {
       top: 70%;
       left: 50%;
       transform: translate(-50%, 50%);
-      font-size: calc(2rem + 0.5vw);
-      padding: calc(0.5rem + 0.5vw) calc(1rem + 1vw);
-      background-color: #c4a150;
+      font-size: calc(1.5rem + 0.5vw);
+      padding: calc(0.3rem + 0.5vw) calc(1rem + 1vw);
+      background-color: #828282;
       color: rgb(0, 0, 0);
       border: 2px, solid, black;
-      border-radius: 5px;
+      border-radius: 10px;
       cursor: pointer;
       display: none;
     }
     
     #restartButton:hover {
-      background-color: #e6bf34;
+      background-color: #cfcfcf;
     }
     
     .modal {

@@ -11,6 +11,8 @@ class Asteroid extends CircleShape {
         this.drawable = drawable;
         this.asteroids = asteroids;
 
+        this.rotation = Math.random() * Math.PI * 2; 
+
         this.image = new Image();
         this.image.src = `themes/${theme}/asteroid.png`;
         this.image.onload = () => {
@@ -32,13 +34,22 @@ class Asteroid extends CircleShape {
         } else {
           scale = 1;
         }
+
+        const drawX = this.position.x;
+        const drawY = this.position.y;
+        const drawSize = this.radius * 2 * scale;
+        
+        ctx.save(); // mentjük a jelenlegi canvas állapotot
+
+        ctx.translate(drawX, drawY);        // eltoljuk a rajzolási pozíciót a sprite közepére
+        ctx.rotate(this.rotation);          // forgatjuk a kontextust
         ctx.drawImage(
             this.image,
-            this.position.x - this.radius * scale,
-            this.position.y - this.radius * scale,
-            this.radius * 2 * scale,
-            this.radius * 2 * scale
-            );
+            -drawSize / 2,                  // mivel már középre transzformáltunk, innen kell kezdeni
+            -drawSize / 2,
+            drawSize,
+            drawSize
+        );
 
 /*             const hitboxX = this.position.x + (this.hitboxOffset?.x || 0);
             const hitboxY = this.position.y + (this.hitboxOffset?.y || 0);

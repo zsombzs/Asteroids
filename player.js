@@ -135,26 +135,31 @@ class Player extends CircleShape {
         this.shots.push(shot1);
 
         if (this.multishotActive) {
+            const angleOffset = 15;
+        
             let offsetLeft = this.vector(-10, 0).rotate(this.rotation);
             let shot2 = new Shot(this.position.x + offsetLeft.x, this.position.y + offsetLeft.y);
+            let rotatedLeft = this.vector(forward.x, forward.y).rotate(-angleOffset);
             shot2.velocity = {
-                x: forward.x * PLAYER_SHOOT_SPEED,
-                y: forward.y * PLAYER_SHOOT_SPEED
+                x: rotatedLeft.x * PLAYER_SHOOT_SPEED,
+                y: rotatedLeft.y * PLAYER_SHOOT_SPEED
             };
             this.updatable.push(shot2);
             this.drawable.push(shot2);
             this.shots.push(shot2);
-            
+        
             let offsetRight = this.vector(10, 0).rotate(this.rotation);
             let shot3 = new Shot(this.position.x + offsetRight.x, this.position.y + offsetRight.y);
+            let rotatedRight = this.vector(forward.x, forward.y).rotate(angleOffset);
             shot3.velocity = {
-                x: forward.x * PLAYER_SHOOT_SPEED,
-                y: forward.y * PLAYER_SHOOT_SPEED
+                x: rotatedRight.x * PLAYER_SHOOT_SPEED,
+                y: rotatedRight.y * PLAYER_SHOOT_SPEED
             };
             this.updatable.push(shot3);
             this.drawable.push(shot3);
             this.shots.push(shot3);
         }
+        
     }
 
     vector(x, y) {
