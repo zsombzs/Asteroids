@@ -24,7 +24,7 @@ class Asteroid extends CircleShape {
     draw(ctx) {
         let scale;
         if (theme === 'ocean') {
-          scale = 1.7;
+          scale = 1.45;
         } else if (theme === 'jungle') {
           scale = 1.27;
         } else if (theme === 'ww2') {
@@ -63,27 +63,24 @@ class Asteroid extends CircleShape {
     }
 
     setHitbox() {
-        if (this.radius === 24) {
-            this.hitboxRadius = 18;
-        } else if (this.radius === 48) {
-            this.hitboxRadius = 38.5;
-        } else if (this.radius === 72) {
-            this.hitboxRadius = 56;
+        if (this.radius === 48) {
+            this.hitboxRadius = 36;
         } else if (this.radius === 96) {
-            this.hitboxRadius = 71;
-        } else if (this.radius === 120) {
-            this.hitboxRadius = 91;
+            this.hitboxRadius = 70;
+        } else if (this.radius === 144) {
+            this.hitboxRadius = 112;
+        } else if (this.radius === 192) {
+            this.hitboxRadius = 150;
+        } else if (this.radius === 240) {
+            this.hitboxRadius = 185;
         } else {
             this.hitboxRadius = this.radius * 0.75;
-        }
-        if (theme === 'ocean') {
-            this.hitboxRadius *= 1.24;
         }
     }
     
 
     split() {
-        if (this.radius < ASTEROID_MIN_RADIUS) {
+        if (this.radius < (ASTEROID_MIN_RADIUS / 2)) {
             this.kill();
             return;
         }

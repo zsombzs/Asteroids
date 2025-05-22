@@ -2,7 +2,7 @@ import { CircleShape } from "./circleshape.js";
 import { theme } from "./main.js";
 class PowerUp extends CircleShape {
     constructor(x, y, type = "boost") {
-        super(x, y, 23, 21);
+        super(x, y, 34.5, 31.5);
         this.type = type;
         this.image = new Image();
         this.image.src = `themes/${theme}/${type}.png`;

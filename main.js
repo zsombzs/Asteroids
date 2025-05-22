@@ -15,8 +15,26 @@ document.body.style.backgroundImage = `url('themes/${theme}/background.jpg')`;
 let canvas = document.getElementById('gameCanvas');
 let ctx = canvas.getContext('2d');
 
-canvas.width = SCREEN_WIDTH;
-canvas.height = SCREEN_HEIGHT;
+function resizeCanvas() {
+    const targetHeightRatio = 0.96;
+    const targetWidthRatio = 0.94;
+    const aspectRatio = SCREEN_WIDTH / SCREEN_HEIGHT;
+
+    const maxHeight = window.innerHeight * targetHeightRatio;
+    const maxWidth = maxHeight * aspectRatio * targetWidthRatio;
+
+    canvas.width = SCREEN_WIDTH;
+    canvas.height = SCREEN_HEIGHT;
+
+    canvas.style.width = `${maxWidth}px`;
+    canvas.style.height = `${maxHeight}px`;
+
+    ctx.imageSmoothingEnabled = false;
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+  
 
 let updatable = [];
 export let drawable = [];
@@ -65,19 +83,19 @@ let lastEarnedPoints = null;
 
 function updateScoreFromHitbox(hitboxRadius) {
 
-    if (hitboxRadius > 71) {
+    if (hitboxRadius > 142) {
         lastEarnedPoints = 1;
         score += 1;
-    } else if (hitboxRadius > 56 && hitboxRadius <= 71) {
+    } else if (hitboxRadius > 112 && hitboxRadius <= 142) {
         lastEarnedPoints = 2;
         score += 2;
-    } else if (hitboxRadius > 38.5 && hitboxRadius <= 56) {
+    } else if (hitboxRadius > 77 && hitboxRadius <= 112) {
         lastEarnedPoints = 3;
         score += 3;
-    } else if (hitboxRadius > 18 && hitboxRadius <= 38.5) {
+    } else if (hitboxRadius > 36 && hitboxRadius <= 77) {
         lastEarnedPoints = 4;
         score += 4;
-    } else if (hitboxRadius <= 18) {
+    } else if (hitboxRadius <= 36) {
         lastEarnedPoints = 5;
         score += 5;
     }
@@ -123,36 +141,28 @@ function gameLoop() {
 
     ctx.save();
     ctx.fillStyle = textColor;
-    ctx.font = "48px Arial";
+    ctx.font = "80px Arial";
     ctx.textAlign = "center";
     ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
     ctx.shadowBlur = 15;
     ctx.shadowOffsetX = 3;
     ctx.shadowOffsetY = 3;
-    ctx.fillText("Zsasteroids", canvas.width / 2, 50);
+    ctx.fillText("Zsasteroids", canvas.width / 2, 75);
     ctx.restore();
 
     ctx.save();
     ctx.fillStyle = textColor;
-    ctx.font = '24px Arial';
+    ctx.font = '40px Arial';
     ctx.textAlign = 'right';
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-    ctx.shadowBlur = 15;
-    ctx.shadowOffsetX = 3;
-    ctx.shadowOffsetY = 3;
-    ctx.fillText("Score: " + score, SCREEN_WIDTH - 10, 30);
+    ctx.fillText("Score: " + score, SCREEN_WIDTH - 20, 45);
     ctx.restore();
 
     if (lastEarnedPoints !== null) {
         ctx.save();
         ctx.fillStyle = textColor;
-        ctx.font = '18px Arial';
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-        ctx.shadowBlur = 15;
-        ctx.shadowOffsetX = 3;
-        ctx.shadowOffsetY = 3;
+        ctx.font = '26px Arial';
         ctx.textAlign = 'right';
-        ctx.fillText(`+${lastEarnedPoints} points`, SCREEN_WIDTH - 10, SCREEN_HEIGHT - 665);
+        ctx.fillText(`+${lastEarnedPoints} points`, SCREEN_WIDTH - 10, 80);
         ctx.restore();
     }
 
@@ -180,14 +190,10 @@ function gameLoop() {
         }
 
         ctx.save();
-        ctx.font = `74px Arial`;
+        ctx.font = `100px Arial`;
         ctx.fillStyle = '#ffffff';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-        ctx.shadowBlur = 15;
-        ctx.shadowOffsetX = 3;
-        ctx.shadowOffsetY = 3;
         ctx.fillText(displayText, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
         ctx.restore();
     } else if (gameOver) {
@@ -199,15 +205,11 @@ function gameLoop() {
         
         if (elapsedGameOver < 3) {
             ctx.save();
-            const pulse = Math.sin(Date.now() / 400) * 1.3 + 74;
+            const pulse = Math.sin(Date.now() / 400) * 1.3 + 100;
             ctx.font = `${pulse}px Arial`;
             ctx.fillStyle = '#ffffff';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-            ctx.shadowBlur = 15;
-            ctx.shadowOffsetX = 3;
-            ctx.shadowOffsetY = 3;
             if (gameOverReason === "timeout") {
                 ctx.fillText("Time is up!", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
             } else if (gameOverReason === "collision") {
@@ -217,7 +219,7 @@ function gameLoop() {
             
         } else {
             ctx.save();
-            ctx.font = '48px Arial';
+            ctx.font = '86px Arial';
             ctx.fillStyle = textColor;
             ctx.textAlign = 'center';
             ctx.fillText("Final Score: " + score, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 50);
@@ -298,13 +300,9 @@ function gameLoop() {
     }
     ctx.save();
     ctx.fillStyle = timeColor;
-    ctx.font = '20px Arial';
+    ctx.font = '35px Arial';
     ctx.textAlign = 'left';
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-    ctx.shadowBlur = 15;
-    ctx.shadowOffsetX = 3;
-    ctx.shadowOffsetY = 3;
-    ctx.fillText(`Time left: ${Math.ceil(timeRemaining)}s`, 20, 30);
+    ctx.fillText(`Time left: ${Math.ceil(timeRemaining)}s`, 20, 45);
     ctx.restore();
 
     if (!gameOver && player.powerUpEndTime) {
@@ -312,12 +310,8 @@ function gameLoop() {
     
         if (remaining > 0) {
             ctx.fillStyle = timeColor;
-            ctx.font = "18px Arial";
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-            ctx.shadowBlur = 15;
-            ctx.shadowOffsetX = 3;
-            ctx.shadowOffsetY = 3;
-            ctx.fillText(`Power-up time: ${remaining.toFixed(1)}s`, 21, 60);
+            ctx.font = "28px Arial";
+            ctx.fillText(`Power-up time: ${remaining.toFixed(1)}s`, 21, 85);
         } else {
             player.powerUpEndTime = null;
         }
@@ -328,12 +322,8 @@ function gameLoop() {
     
         if (remainingMultishotTime > 0) {
             ctx.fillStyle = timeColor;
-            ctx.font = "18px Arial";
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-            ctx.shadowBlur = 15;
-            ctx.shadowOffsetX = 3;
-            ctx.shadowOffsetY = 3;
-            ctx.fillText(`Multishot time: ${remainingMultishotTime.toFixed(1)}s`, 21, 90);
+            ctx.font = "28px Arial";
+            ctx.fillText(`Multishot time: ${remainingMultishotTime.toFixed(1)}s`, 21, 125);
         } else {
             player.multishotEndTime = null;
         }
@@ -341,70 +331,50 @@ function gameLoop() {
 
     ctx.save();
     ctx.fillStyle = textColor;
-    ctx.font = '14px Arial';
+    ctx.font = '20px Arial';
     ctx.textAlign = 'left';
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-    ctx.shadowBlur = 15;
-    ctx.shadowOffsetX = 3;
-    ctx.shadowOffsetY = 3;
     ctx.fillText('W = forward   A = rotate left   D = rotate right   S = backward   SPACE = shoot, restart', 10, SCREEN_HEIGHT - 10);
     ctx.restore();
 
-    const iconSize = 20;
+    const iconSize = 30;
     const iconX = 7;
-    const iconY = canvas.height -50;
+    const iconY = canvas.height -60;
     if (powerUpImage.complete) {
         ctx.drawImage(powerUpImage, iconX, iconY, iconSize, iconSize);
     }
 
-    ctx.font = "14px Arial";
+    ctx.font = "20px Arial";
     ctx.fillStyle = textColor;
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-    ctx.shadowBlur = 15;
-    ctx.shadowOffsetX = 3;
-    ctx.shadowOffsetY = 3;
-    ctx.fillText("- Power-Up: Doubles speed and fire rate", iconX + iconSize + 10, iconY + 15);
+    ctx.fillText("- Power-Up: Doubles speed and fire rate", iconX + iconSize + 10, iconY + 21);
 
-    const multishotIconSize = 20;
-    const multishotIconX = 7;
-    const multishotIconY = canvas.height - 80;
+    const multishotIconSize = 33;
+    const multishotIconX = 6;
+    const multishotIconY = canvas.height - 95;
 
     if (multishotImage.complete) {
         ctx.drawImage(multishotImage, multishotIconX, multishotIconY, multishotIconSize, multishotIconSize);
     }
 
-    ctx.font = "14px Arial";
+    ctx.font = "20px Arial";
     ctx.fillStyle = textColor;
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-    ctx.shadowBlur = 15;
-    ctx.shadowOffsetX = 3;
-    ctx.shadowOffsetY = 3;
-    ctx.fillText("- Multishot: Shoots 3 bullets at once", multishotIconX + multishotIconSize + 10, multishotIconY + 16);
+    ctx.fillText("- Multishot: Shoots 3 bullets at once", multishotIconX + multishotIconSize + 10, multishotIconY + 25);
 
     ctx.save();
     ctx.fillStyle = textColor;
-    ctx.font = '18px Arial';
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-    ctx.shadowBlur = 15;
-    ctx.shadowOffsetX = 3;
-    ctx.shadowOffsetY = 3;
+    ctx.font = '28px Arial';
     ctx.textAlign = 'right';
 
-    ctx.fillText("Top Scores:", SCREEN_WIDTH - 10, SCREEN_HEIGHT - 450);
+    ctx.fillText("Top Scores:", SCREEN_WIDTH - 10, SCREEN_HEIGHT - 650);
 
-    let startY = SCREEN_HEIGHT - 430;
-    let padding = 18;
+    let startY = SCREEN_HEIGHT - 615;
+    let padding = 30;
     
     highScores.forEach((entry, index) => {
         let indexText = `${index + 1}.`;
         let scoreText = entry.score.toString();
     
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-        ctx.shadowBlur = 15;
-        ctx.shadowOffsetX = 3;
-        ctx.shadowOffsetY = 3;
-        ctx.fillText(indexText, SCREEN_WIDTH - 50, startY + index * padding);
-        ctx.fillText(scoreText, SCREEN_WIDTH -10, startY + index * padding);
+        ctx.fillText(indexText, SCREEN_WIDTH - 80, startY + index * padding);
+        ctx.fillText(scoreText, SCREEN_WIDTH - 10, startY + index * padding);
     });
     
     ctx.restore();

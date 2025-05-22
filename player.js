@@ -8,7 +8,7 @@ import { theme } from "./main.js"
 class Player extends CircleShape {
     
     constructor(x, y, updatable, drawable, shots) {
-        super(x, y, 43.5, 22.5);
+        super(x, y, 65.25, 33.75);
         this.rotation = 0;
         this.shootTimer = 0;
         this.updatable = updatable;
@@ -31,9 +31,9 @@ class Player extends CircleShape {
     draw(ctx) {
         let scale;
         if (theme === 'ocean') {
-          scale = 1;
+          scale = 0.9;
         } else if (theme === 'jungle') {
-          scale = 1;
+          scale = 0.9;
         } else if (theme === 'ww2') {
             scale = 0.67;
         } else {

@@ -18,21 +18,44 @@ html, body {
       align-items: center;
       height: 100vh;
     }
+
+    #gameContainer {
+      position: relative;
+      width: fit-content;
+      margin: 0 auto;
+    }
     
     #gameCanvas {
       display: block;
-      border: 3px solid rgb(39, 39, 39);
-      box-shadow: 0 0 30px rgb(57, 57, 57);
+      border: 0.2vw solid rgb(39, 39, 39);
+      box-shadow: 0 0 2vw rgb(57, 57, 57);
       image-rendering: pixelated;
     }
-    
+
+    #mainMenuButton {
+        position: absolute;
+        top: 0px;
+        left: -10px;
+        transform: translateX(-100%);
+        padding: calc(0.4rem + 0.2vw) calc(0.5rem + 0.5vw);
+        background-color:#c4a150;
+        color: rgb(0, 0, 0);
+        border: 2px solid #000000;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: calc(1rem + 0.5vw);
+    }
+    #mainMenuButton:hover {
+        background-color: #e6bf34;
+    }
+
     #restartButton {
       position: absolute;
-      top: 60%;
+      top: 70%;
       left: 50%;
-      transform: translateX(-50%);
-      font-size: 24px;
-      padding: 10px 20px;
+      transform: translate(-50%, 50%);
+      font-size: calc(2rem + 0.5vw);
+      padding: calc(0.5rem + 0.5vw) calc(1rem + 1vw);
       background-color: #c4a150;
       color: rgb(0, 0, 0);
       border: 2px, solid, black;
@@ -43,22 +66,6 @@ html, body {
     
     #restartButton:hover {
       background-color: #e6bf34;
-    }
-
-    #mainMenuButton {
-        position: absolute;
-        top: 10px;
-        left: 9px;
-        padding: 10px 12px;
-        background-color:#c4a150;
-        color: rgb(0, 0, 0);
-        border: 2px solid #000000;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 18px;
-    }
-    #mainMenuButton:hover {
-        background-color: #e6bf34;
     }
     
     .modal {
@@ -73,42 +80,42 @@ html, body {
       justify-content: center;
       z-index: 1000;
       font-family: 'Courier New', monospace;
-      transform: scale(1.2); 
+      transform: scale(1.1); 
   }
   
   .modal-content {
       background: rgb(143, 122, 102);
       border: 2px solid rgb(102, 77, 51);
       border-radius: 12px;
-      padding: 20px 30px;
+      padding: 3vw;
       box-shadow: 0 0 24px rgba(102, 77, 51, 0.5);
       color: rgb(247, 247, 225);
       text-align: center;
-      max-width: 480px;
+      max-width: 600px;
       width: 90%;
-      font-size: 24px;
+      font-size: calc(2rem + 0.5vw);
   }
 
   .modal-content input[type="text"] {
-    margin-top: 18px;
-    margin-bottom: 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     padding: 12px 18px;
     border: 1px solid rgb(102, 77, 51);
     border-radius: 8px;
     background-color: rgb(174, 151, 87);
     color: rgb(247, 247, 225);
-    font-size: 24px;
+    font-size: calc(2rem + 0.5vw);
     width: 100%;
     box-sizing: border-box;
 }
 
 .modal-content small {
     color: rgb(246, 222, 191);
-    font-size: 18px;
+    font-size: calc(1.2rem + 0.3vw);
 }
 
 .modal-content button {
-    padding: 15px 30px;
+  padding: calc(0.5rem + 0.5vw) calc(1rem + 1vw);
     background-color: rgb(174, 151, 87);
     color: rgb(245, 245, 220);
     border: none;
@@ -116,7 +123,7 @@ html, body {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.2s;
-    font-size: 18px;
+    font-size: calc(1rem + 0.5vw);
 }
 
 .modal-content button:hover {
@@ -126,6 +133,6 @@ html, body {
 .buttons {
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: 2vw;
   margin-top: 18px;
 }
