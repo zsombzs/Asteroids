@@ -16,6 +16,10 @@ const images = [
   'themes/ocean/multishot.png',
   'themes/jungle/multishot.png',
   'themes/ww2/multishot.png',
+  'themes/space/strike.png',
+  'themes/ocean/strike.png',
+  'themes/jungle/strike.png',
+  'themes/ww2/strike.png',
 
 ];
 

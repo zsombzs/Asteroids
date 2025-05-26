@@ -392,6 +392,19 @@ body {
   box-shadow: 0 6px 12px rgb(255, 255, 255, 0.5);
 }
 
+.info-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+}
+
+.info-text {
+  color: rgb(255, 0, 0);
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+
 #info-icon {
   display: inline-block;
   margin-left: 10px;

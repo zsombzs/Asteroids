@@ -8,6 +8,7 @@ import { Asteroid } from './asteroid.js';
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from './constants.js';
 import { supabase } from './supabase.js';
 import { PowerUp } from "./powerup.js";
+import { Strike } from './strike.js';
 
 document.body.style.backgroundImage = `url('themes/${theme}/background.jpg')`;
 
@@ -105,6 +106,8 @@ let powerUpImage = new Image();
 powerUpImage.src = `themes/${theme}/boost.png`;
 let multishotImage = new Image();
 multishotImage.src = `themes/${theme}/multishot.png`;
+let strikeImage = new Image();
+strikeImage.src = `themes/${theme}/strike.png`;
 
 let textColor;
 if (theme === 'ocean') {
@@ -131,6 +134,15 @@ if (theme === 'ocean') {
 let multishotSpawnTimes = [50, 30, 10];
 let spawnedMultishots = new Set();
 
+let spawnedStrikes = new Set();
+
+let pendingStrikeTimes = [10, 30, 50];
+let nextStrikeCountdownStart = null;
+let currentStrikeTime = null;
+let strikeCountdownText = null;
+
+
+
 function gameLoop() {
     let now = Date.now();
     let dt = (now - lastTime) / 1000;
@@ -138,6 +150,45 @@ function gameLoop() {
 
     ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);  // Clear screen
     ctx.drawImage(backgroundImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    if (!gameOver && !countdownRunning) {
+        const elapsedGameTime = (Date.now() - gameStartTime) / 1000;
+    
+        if (pendingStrikeTimes.length > 0 && !nextStrikeCountdownStart) {
+            if (elapsedGameTime >= pendingStrikeTimes[0] - 3) {
+                nextStrikeCountdownStart = Date.now();
+                currentStrikeTime = pendingStrikeTimes[0];
+            }
+        }
+    
+        if (nextStrikeCountdownStart) {
+            const countdownElapsed = (Date.now() - nextStrikeCountdownStart) / 1000;
+            if (countdownElapsed < 1) {
+                strikeCountdownText = "Strike incoming in 3...";
+            } else if (countdownElapsed < 2) {
+                strikeCountdownText = "Strike incoming in 2...";
+            } else if (countdownElapsed < 3) {
+                strikeCountdownText = "Strike incoming in 1...";
+            } else {
+                strikeCountdownText = null;
+                spawnStrike();
+                spawnedStrikes.add(currentStrikeTime);
+                pendingStrikeTimes.shift();
+                nextStrikeCountdownStart = null;
+                currentStrikeTime = null;
+            }
+        }
+    }
+
+    if (strikeCountdownText !== null) {
+        ctx.save();
+        ctx.font = "bold 32px Arial";
+        ctx.fillStyle = timeColor;
+        ctx.textAlign = "center";
+        ctx.globalAlpha = 0.5 + 0.5 * Math.sin(Date.now() / 100);
+        ctx.fillText(strikeCountdownText, canvas.width / 2, 125);
+        ctx.restore();
+    }
 
     ctx.save();
     ctx.fillStyle = textColor;
@@ -359,6 +410,18 @@ function gameLoop() {
     ctx.fillStyle = textColor;
     ctx.fillText("- Multishot: Shoots 3 bullets at once", multishotIconX + multishotIconSize + 10, multishotIconY + 25);
 
+    const strikeIconSize = 33;
+    const strikeIconX = 6;
+    const strikeIconY = canvas.height - 130;
+
+    if (strikeImage.complete) {
+        ctx.drawImage(strikeImage, strikeIconX, strikeIconY, strikeIconSize, strikeIconSize);
+    }
+
+    ctx.font = "20px Arial";
+    ctx.fillStyle = textColor;
+    ctx.fillText("- Strike: Hit: +200 points, Collision: game over", strikeIconX + strikeIconSize + 10, strikeIconY + 25);
+
     ctx.save();
     ctx.fillStyle = textColor;
     ctx.font = '28px Arial';
@@ -376,7 +439,7 @@ function gameLoop() {
         ctx.fillText(indexText, SCREEN_WIDTH - 80, startY + index * padding);
         ctx.fillText(scoreText, SCREEN_WIDTH - 10, startY + index * padding);
     });
-    
+
     ctx.restore();
 
     requestAnimationFrame(gameLoop);
@@ -420,6 +483,7 @@ function restartGame() {
     gameOver = false;
     showGameOver = false;
     gameOverTime = 0;
+
     countdownStarted = false;
     countdownStartTime = 0;
     countdownRunning = true;
@@ -427,13 +491,21 @@ function restartGame() {
     score = 0
     scoreSubmitted = false;
 
-    gameStartTime = Date.now()
+    gameStartTime = Date.now();
 
     spawnedMultishots = new Set();
+    multishotSpawnTimes = [10, 30, 50];
+    
+    spawnedStrikes = new Set();
+    pendingStrikeTimes = [10, 30, 50];
+    nextStrikeCountdownStart = null;
+    currentStrikeTime = null;
+    strikeCountdownText = null;
 
     restartButton.style.display = "none";
 
     lastTime = Date.now();
+
     requestAnimationFrame(gameLoop);
 }
 
@@ -506,5 +578,32 @@ async function promptForNameAndSave(score) {
     } else {
         await saveScore(score);
     }
-  }
+}
+
+function spawnStrike() {
+    new Strike(
+        updatable,
+        drawable,
+        player,
+        () => {
+            gameOver = true;
+            gameOverTime = Date.now();
+            gameOverReason = "collision";
+            if (!scoreSubmitted) {
+                if (score >= topThreeThreshold) {
+                    promptForNameAndSave(score);
+                } else {
+                    saveScore(score);
+                }
+                scoreSubmitted = true;
+                fetchTopScores();
+            }
+        },
+        () => {
+            score += 200;
+            lastEarnedPoints = 200;
+        }
+    );
+}
+
 
