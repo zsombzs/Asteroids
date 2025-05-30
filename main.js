@@ -116,6 +116,8 @@ if (theme === 'ocean') {
   textColor = 'rgb(251, 213, 42)';
 } else if (theme === 'ww2') {
     textColor = '#f7ede2';
+} else if (theme === 'city') {
+    textColor = 'rgb(252, 114, 22)';
 } else {
   textColor = 'red';
 }

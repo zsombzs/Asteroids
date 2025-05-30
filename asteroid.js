@@ -31,7 +31,9 @@ class Asteroid extends CircleShape {
           scale = 1.27;
         } else if (theme === 'ww2') {
             scale = 0.965;
-        } else {
+        } else if (theme === 'city') {
+            scale = 0.965;
+        }  else {
           scale = 1;
         }
 
@@ -39,33 +41,36 @@ class Asteroid extends CircleShape {
         const drawY = this.position.y;
         const drawSize = this.radius * 2 * scale;
         
-        ctx.save(); // mentjük a jelenlegi canvas állapotot
+        ctx.save();
 
-        ctx.translate(drawX, drawY);        // eltoljuk a rajzolási pozíciót a sprite közepére
-        ctx.rotate(this.rotation);          // forgatjuk a kontextust
+        ctx.translate(drawX, drawY);
+        ctx.rotate(this.rotation);
+        
         ctx.drawImage(
             this.image,
-            -drawSize / 2,                  // mivel már középre transzformáltunk, innen kell kezdeni
+            -drawSize / 2,
             -drawSize / 2,
             drawSize,
             drawSize
         );
 
-/*             const hitboxX = this.position.x + (this.hitboxOffset?.x || 0);
-            const hitboxY = this.position.y + (this.hitboxOffset?.y || 0);
-            
-            ctx.beginPath();
-            ctx.strokeStyle = 'red';
-            ctx.lineWidth = 1;
-            ctx.arc(hitboxX, hitboxY, this.hitboxRadius, 0, Math.PI * 2);
-            ctx.stroke();
+/*         const hitboxX = this.hitboxOffset?.x || 0;
+        const hitboxY = this.hitboxOffset?.y || 0;
+        
+        // Debug kör kirajzolása a transzformált koordinátákhoz viszonyítva
+        ctx.beginPath();
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 1;
+        ctx.arc(hitboxX, hitboxY, this.hitboxRadius, 0, Math.PI * 2);
+        ctx.stroke();
+        
+        // Debug szöveg kirajzolása
+        ctx.fillStyle = 'lime';
+        ctx.font = '12px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(`r: ${this.radius}`, 0, -this.radius - 10); */
 
-    ctx.fillStyle = 'lime';
-    ctx.font = '12px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText(`r: ${this.radius}`, this.position.x, this.position.y - this.radius - 10); */
-
-    ctx.restore();
+        ctx.restore();
     }
 
     update(dt) {

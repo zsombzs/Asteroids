@@ -68,6 +68,8 @@ class Strike extends CircleShape {
             scale = 1.4;
         } else if (theme === 'ww2') {
             scale = 1.3;
+        } else if (theme === 'city') {
+            scale = 1.15;
         }
         
 

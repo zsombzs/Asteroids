@@ -32,9 +32,13 @@ class Player extends CircleShape {
         let scale;
         if (theme === 'ocean') {
           scale = 0.9;
-        } else if (theme === 'jungle') {
+        } else if (theme === 'space') {
+            scale = 0.82;
+        }  else if (theme === 'jungle') {
           scale = 0.9;
         } else if (theme === 'ww2') {
+            scale = 0.64;
+        } else if (theme === 'city') {
             scale = 0.67;
         } else {
           scale = 1;

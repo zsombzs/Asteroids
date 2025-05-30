@@ -20,7 +20,11 @@ const images = [
   'themes/ocean/strike.png',
   'themes/jungle/strike.png',
   'themes/ww2/strike.png',
-
+  'themes/city/asteroid.png',
+  'themes/city/spaceship.png',
+  'themes/city/boost.png',
+  'themes/city/multishot.png',
+  'themes/city/strike.png',
 ];
 
 function spawnRandomFlyingImage() {

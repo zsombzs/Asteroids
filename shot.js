@@ -17,6 +17,8 @@ class Shot extends CircleShape {
             ctx.fillStyle = 'rgb(43, 255, 5)';
         } else if (theme === "ww2") {
             ctx.fillStyle = '#cae9ff';
+        } else if (theme === "city") {
+            ctx.fillStyle = 'rgb(255, 213, 0)';
         } else {
             ctx.fillStyle = 'red';
         }

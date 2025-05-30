@@ -67,7 +67,7 @@ body {
   
   .video-wrapper {
     position: absolute;
-    box-shadow: 0 0 1.5vw rgba(100, 150, 255, 0.6);
+    box-shadow: 0 0 2.5vw rgba(100, 150, 255, 0.6);
     top: 21%;
     left: 10%;
     max-width: 78%;
@@ -307,24 +307,24 @@ body {
   
   .space-button {
     background-image: url('themes/space/background.jpg');
-    border: 2px solid #5a0202;
-    box-shadow: 0 0 15px #860000;
+    border: 2px solid #a90000;
+    box-shadow: 0 0 15px #b90404;
     animation: glow_space 2s infinite alternate;
   }
   
   @keyframes glow_space {
     from {
-      box-shadow: 0 0 5px #860000;
+      box-shadow: 0 0 5px #b20101;
     }
     to {
-      box-shadow: 0 0 20px #aa2222;
+      box-shadow: 0 0 20px #d82929;
     }
   }
   
   .ocean-button {
     background-image: url('themes/ocean/background.jpg');
-    border: 2px solid rgb(74, 133, 97);
-    box-shadow: 0 0 15px rgb(96, 173, 125);
+    border: 2px solid rgb(124, 223, 162);
+    box-shadow: 0 0 15px rgb(130, 234, 170);
     animation: glow_ocean 2s infinite alternate;
   }
   
@@ -339,8 +339,8 @@ body {
   
   .jungle-button {
     background-image: url('themes/jungle/background.jpg');
-    border: 2px solid rgb(31, 71, 46);
-    box-shadow: 0 0 15px rgb(31, 71, 46);
+    border: 2px solid rgb(26, 110, 58);
+    box-shadow: 0 0 15px rgb(9, 190, 78);
     animation: glow_jungle 2s infinite alternate;
   }
   
@@ -349,13 +349,13 @@ body {
       box-shadow: 0 0 5px rgb(31, 71, 46);
     }
     to {
-      box-shadow: 0 0 20px rgb(47, 112, 72);
+      box-shadow: 0 0 20px rgb(54, 132, 84);
     }
   }
   
   .ww2-button {
     background-image: url('themes/ww2/background.jpg');
-    border: 2px solid rgb(123, 59, 17);
+    border: 2px solid rgb(193, 114, 62);
     box-shadow: 0 0 15px rgb(138, 69, 22);
     animation: glow_ww2 2s infinite alternate;
   }
@@ -368,7 +368,23 @@ body {
         box-shadow: 0 0 20px rgb(222, 122, 55);
       }
     }
-  
+
+    .city-button {
+        background-image: url('themes/city/background.jpg');
+        border: 2px solid #d9d9d9;
+        box-shadow: 0 0 15px #b2b2b2;
+        animation: glow_city 2s infinite alternate;
+      }
+      
+      @keyframes glow_city {
+        from {
+          box-shadow: 0 0 5px #cdcdcd;
+        }
+        to {
+          box-shadow: 0 0 20px #cacaca;
+        }
+      }
+    
   .theme-button:hover {
     filter: brightness(1.2);
     transform: scale(1.15);
