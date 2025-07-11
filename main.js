@@ -10,7 +10,7 @@ import { supabase } from './supabase.js';
 import { PowerUp } from "./powerup.js";
 import { Strike } from './strike.js';
 
-document.body.style.backgroundImage = `url('themes/${theme}/background.jpg')`;
+document.body.style.backgroundImage = `url('/themes/${theme}/background.jpg')`;
 
 
 let canvas = document.getElementById('gameCanvas');
@@ -103,11 +103,11 @@ function updateScoreFromHitbox(hitboxRadius) {
 }
 
 let powerUpImage = new Image();
-powerUpImage.src = `themes/${theme}/boost.png`;
+powerUpImage.src = `/themes/${theme}/boost.png`;
 let multishotImage = new Image();
-multishotImage.src = `themes/${theme}/multishot.png`;
+multishotImage.src = `/themes/${theme}/multishot.png`;
 let strikeImage = new Image();
-strikeImage.src = `themes/${theme}/strike.png`;
+strikeImage.src = `/themes/${theme}/strike.png`;
 
 let textColor;
 if (theme === 'ocean') {
@@ -449,7 +449,7 @@ function gameLoop() {
 
 let lastTime = Date.now();
 let backgroundImage = new Image();
-backgroundImage.src = `themes/${theme}/background.jpg`;
+backgroundImage.src = `/themes/${theme}/background.jpg`;
 
 const radius = 23
 

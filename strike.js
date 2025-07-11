@@ -31,7 +31,7 @@ class Strike extends CircleShape {
         this.drawable.push(this);
 
         this.image = new Image();
-        this.image.src = `themes/${theme}/strike.png`;
+        this.image.src = `/themes/${theme}/strike.png`;
     }
 
     update(dt) {

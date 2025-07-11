@@ -15,7 +15,7 @@ class Player extends CircleShape {
         this.drawable = drawable;
         this.shots = shots;
         this.image = new Image();
-        this.image.src = `themes/${theme}/spaceship.png`;
+        this.image.src = `/themes/${theme}/spaceship.png`;
         this.image.onload = () => {
             this.imageLoaded = true;
         };

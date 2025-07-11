@@ -5,7 +5,7 @@ class PowerUp extends CircleShape {
         super(x, y, 34.5, 31.5);
         this.type = type;
         this.image = new Image();
-        this.image.src = `themes/${theme}/${type}.png`;
+        this.image.src = `/themes/${theme}/${type}.png`;
         this.imageLoaded = false;
         this.image.onload = () => {
             this.imageLoaded = true;

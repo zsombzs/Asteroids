@@ -14,7 +14,7 @@ class Asteroid extends CircleShape {
         this.rotation = Math.random() * Math.PI * 2; 
 
         this.image = new Image();
-        this.image.src = `themes/${theme}/asteroid.png`;
+        this.image.src = `/themes/${theme}/asteroid.png`;
         this.image.onload = () => {
             this.image.width = radius * 2;
             this.image.height = radius * 2;
