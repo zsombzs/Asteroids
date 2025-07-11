@@ -118,8 +118,8 @@ body {
   
   @font-face {
     font-family: 'Fenwick-Outline';
-    src: url('./fonts/AquaGrotesque.woff2') format('woff2'),
-         url('./fonts/AquaGrotesque.woff') format('woff'),
+    src: url('/assets/fonts/AquaGrotesque.woff2') format('woff2'),
+         url('/assets/fonts/AquaGrotesque.woff') format('woff'),
   }
 
   /* Jobb felső: Top 20 */

@@ -14,7 +14,7 @@
   <title>Zsasteroids</title>
   <link rel="stylesheet" href="new_design.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="icon" type="image/png" href="images/zsasteroids_icon_no_bg.png" />
+  <link rel="icon" type="image/png" href="/assets/images/zsasteroids_icon_no_bg.png" />
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -28,9 +28,9 @@
 
     <div class="container" id="score-section">
       <div class="title-row">
-        <img src="images/zsasteroids_icon_no_bg.png" alt="Left Icon" class="left-image" />
+        <img src="/assets/images/zsasteroids_icon_no_bg.png" alt="Left Icon" class="left-image" />
         <h2 class="top20Scores">Top 20 High Scores</h2>
-        <img src="images/zsasteroids_icon_no_bg.png" alt="Right Icon" class="right-image" />
+        <img src="/assets/images/zsasteroids_icon_no_bg.png" alt="Right Icon" class="right-image" />
       </div>
       <div id="score-container">
         <div id="first-column">
@@ -112,15 +112,15 @@
     </div>
   </div>
   <div class="background-container"></div>
-  <script src="flying_background.js"></script>
-  <script type="module" src="main_supabase.js"></script>
+  <script src="/js/flying_background.js"></script>
+  <script type="module" src="/js/main_supabase.js"></script>
   <script>
     const videoSources = [
-      "videos/jungle.mp4",
-      "videos/ww2.mp4",
-      "videos/ocean.mp4",
-      "videos/city.mp4",
-      "videos/space.mp4"
+      "/assets/videos/jungle.mp4",
+      "/assets/videos/ww2.mp4",
+      "/assets/videos/ocean.mp4",
+      "/assets/videos/city.mp4",
+      "/assets/videos/space.mp4"
     ];
   
     const videoElement = document.getElementById('background-video');

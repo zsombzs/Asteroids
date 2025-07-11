@@ -1,14 +1,14 @@
 export const urlParams = new URLSearchParams(window.location.search);
 export const theme = urlParams.get('theme') || 'space';
 
-import { Player } from './player.js';
-import { AsteroidField } from './asteroidfield.js';
-import { Shot } from './shot.js';
-import { Asteroid } from './asteroid.js';
-import { SCREEN_WIDTH, SCREEN_HEIGHT } from './constants.js';
-import { supabase } from './supabase.js';
-import { PowerUp } from "./powerup.js";
-import { Strike } from './strike.js';
+import { Player } from '/js/player.js';
+import { AsteroidField } from '/js/asteroidfield.js';
+import { Shot } from '/js/shot.js';
+import { Asteroid } from '/js/asteroid.js';
+import { SCREEN_WIDTH, SCREEN_HEIGHT } from '/js/constants.js';
+import { supabase } from '/js/supabase.js';
+import { PowerUp } from "/js/powerup.js";
+import { Strike } from '/js/strike.js';
 
 document.body.style.backgroundImage = `url('/themes/${theme}/background.jpg')`;
 
