@@ -58,11 +58,71 @@ body {
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
   }
   
+  /*   Music container */
+  .music-container {
+    grid-column: 1 / 3;
+    grid-row: 1;
+    text-align: center;
+    padding: 0vh 0vw;
+    width: 100%;
+  }
+
+  .music-button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1vw;
+  }
+  .music-label {
+    font-size: calc(1vw + 10px);
+    font-weight: 1000;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    background: linear-gradient(270deg, #ffffffa7, #fca211cf, #e5e5e5de, #ffffffa7);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 6s ease infinite;
+    padding: 0.3em 0;
+    user-select: none;
+    vertical-align: middle;
+  }
+
+  .music-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.6em 2em;
+    font-size: 0.7rem;
+    font-family: 'AquaGrotesque', sans-serif;
+    color: #ffffff;
+    background: rgba(0, 40, 85, 0.4);
+    border: 2px solid #769dc9;
+    border-radius: 0.6em;
+    box-shadow: 0 0 10px rgba(95, 163, 243, 0.7), inset 0 0 4px rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .music-button:hover {
+    background: rgba(95, 163, 243, 0.9);
+    box-shadow: 0 0 12px rgba(95, 163, 243, 0.9), 0 0 4px rgba(255, 255, 255, 0.2);
+    transform: scale(1.08);
+  }
+  
+  .music-button i {
+    font-size: 1rem;
+    color: hsla(0, 0%, 100%, 0.812);
+    vertical-align: middle;
+  }  
 
   /* Bal felső: videók */
   #video-container {
     position: relative;
     overflow: hidden;
+    grid-column: 1;
+    grid-row: 2;
   }
   
   .video-wrapper {
@@ -121,11 +181,11 @@ body {
     src: url('/assets/fonts/AquaGrotesque.woff2') format('woff2'),
          url('/assets/fonts/AquaGrotesque.woff') format('woff'),
   }
-
+  
   /* Jobb felső: Top 20 */
   #score-section {
     grid-column: 2;
-    grid-row: 1;
+    grid-row: 2;
   }
   
   .title-row {
@@ -249,7 +309,7 @@ body {
   /* kozepso container */
   .theme-container {
     grid-column: 1 / 3;
-    grid-row: 2;
+    grid-row: 3;
     text-align: center;
   }
 
@@ -412,7 +472,7 @@ body {
   /* Bal alsó: infó */
   #info-box {
     grid-column: 1;
-    grid-row: 3;
+    grid-row: 4;
     overflow-y: auto;
     max-height: 45vh;
     text-align: center;
@@ -422,7 +482,7 @@ body {
   /* Jobb alsó: social media */
   #social-box {
     grid-column: 2;
-    grid-row: 3;
+    grid-row: 4;
 
     display: flex;
     flex-direction: column;

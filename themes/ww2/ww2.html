@@ -16,13 +16,19 @@
     <link rel="stylesheet" href="ww2.css" />
     <link href="https://fonts.googleapis.com/css2?family=Viga&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="/assets/images/zsasteroids_icon_no_bg.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
     <div id="gameContainer">
-        <button id="mainMenuButton" onclick="window.location.href='/index.html'">↩︎</button>
+        <button class="delayed-button" id="mainMenuButton" data-href='/index.html'>↩︎</button>
+        <button id="musicToggle"><i class="fas fa-music"></i></button>
+        <button id="soundToggle"><i class="fas fa-volume-high"></i></button>
+        <button id="soundVariantToggle">B&Á: ON</button>
+        <script type="module" src="/js/click_sound_delayed.js"></script>
         <canvas id="gameCanvas" width="1920" height="1080" style="image-rendering: pixelated;"></canvas>
     </div>
     <button id="restartButton" style="display: none;">RESTART</button>
+    <script src="/js/global.js"></script>
     <script type="module" src="/js/main.js"></script>
 
     <div id="nameModal" style="display:none;" class="modal">
@@ -36,5 +42,8 @@
             </div>
         </div>
     </div> 
+    <script type="module" src="/js/click_sound.js"></script> 
+    <audio id="background-music" preload="auto" loop></audio>
+    <script type="module" src="/js/themes_background_music.js"></script>
 </body>
 </html>

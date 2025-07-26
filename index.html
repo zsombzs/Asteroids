@@ -53,18 +53,52 @@
         </div>
       </div>
     </div>
+    
+    <div class="container music-container">
+      <audio id="background-music" src="/assets/audio/main-theme.mp3" preload="auto" loop></audio>
+      <div class="music-button-wrapper">
+        <button class="music-toggle music-button">
+          <i class="fas fa-play"></i>
+        </button>
+
+        <span class="music-label">Music</span>
+        <button class="music-toggle music-button">
+          <i class="fas fa-play"></i>
+        </button>
+      
+        <span class="music-label">Music</span>
+        <button class="music-toggle music-button">
+          <i class="fas fa-play"></i>
+        </button>
+
+        <span class="music-label">Music</span>
+        <button class="music-toggle music-button">
+          <i class="fas fa-play"></i>
+        </button>
+
+        <span class="music-label">Music</span>
+        <button class="music-toggle music-button">
+          <i class="fas fa-play"></i>
+        </button>
+      </div>
+    </div>
+    
+    <script type="module" src="/js/music_toggle.js"></script>
+    
+
     <div class= "container theme-container">
       <div class="theme-selection">
         <div class="theme-header">
           <span class="theme-label">Choose a theme to play:</span>
         </div>
         <div class="theme-buttons">
-          <button class="theme-button space-button" onclick="location.href='themes/space/space.html?theme=space'">🚀 Space</button>
-          <button class="theme-button ocean-button" onclick="location.href='themes/ocean/ocean.html?theme=ocean'">🌊 Ocean</button>
-          <button class="theme-button jungle-button" onclick="location.href='themes/jungle/jungle.html?theme=jungle'">🐒 Jungle</button>
-          <button class="theme-button ww2-button" onclick="location.href='themes/ww2/ww2.html?theme=ww2'">💣 World War II</button>
-          <button class="theme-button city-button" onclick="location.href='themes/city/city.html?theme=city'">🌆 City</button>
+          <button class="theme-button space-button delayed-button" data-href='themes/space/space.html?theme=space'>🚀 Space</button>
+          <button class="theme-button ocean-button delayed-button" data-href='themes/ocean/ocean.html?theme=ocean'>🌊 Ocean</button>
+          <button class="theme-button jungle-button delayed-button" data-href='themes/jungle/jungle.html?theme=jungle'>🐒 Jungle</button>
+          <button class="theme-button ww2-button delayed-button" data-href='themes/ww2/ww2.html?theme=ww2'>💣 World War II</button>
+          <button class="theme-button city-button delayed-button" data-href='themes/city/city.html?theme=city'>🌆 City</button>
         </div>
+        <script type="module" src="/js/click_sound_delayed.js"></script>
       </div>
     </div>
     <div class="container" id="info-box">
@@ -143,5 +177,6 @@
   
     playNextVideo("");
   </script>
+  <script type="module" src="/js/click_sound.js"></script>
 </body>
 </html>

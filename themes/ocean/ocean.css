@@ -49,6 +49,65 @@ html, body {
         background-color: rgb(250, 196, 80);
     }
 
+    #musicToggle {
+      position: absolute;
+      top: 0px;
+      right: -5px;
+      transform: translateX(100%);
+      padding: calc(0.4rem + 0.2vw) calc(0.5rem + 0.5vw);
+      background-color: #f3f3b6;
+      color: rgb(0, 0, 0);
+      border: 2px solid #000000;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: calc(1.2rem + 0.3vw);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    #musicToggle i {
+      pointer-events: none;
+    }
+    
+    #musicToggle:hover {
+      background-color: rgb(250, 196, 80);
+    }
+    
+    #soundToggle {
+      position: absolute;
+      top: 70px;
+      right: -5px;
+      transform: translateX(100%);
+      padding: calc(0.4rem + 0.2vw) calc(0.5rem + 0.5vw); 
+      background-color:#f3f3b6;
+      color: rgb(0, 0, 0);
+      border: 2px solid #000000;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: calc(1.2rem + 0.3vw);
+    }
+    #soundToggle:hover {
+      background-color: rgb(250, 196, 80);
+    }
+
+    #soundVariantToggle {
+      position: absolute;
+      top: 140px;
+      right: -5px;
+      transform: translateX(100%);
+      padding: calc(0.4rem + 0.2vw) calc(0.5rem + 0.5vw); 
+      background-color:#f3f3b6;
+      color: rgb(0, 0, 0);
+      border: 2px solid #000000;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: calc(0.8rem + 0.15vw);
+    }
+    #soundVariantToggle:hover {
+      background-color: rgb(250, 196, 80);
+    }
+
     #restartButton {
       position: absolute;
       top: 70%;

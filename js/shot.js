@@ -2,9 +2,28 @@ import { CircleShape } from './circleshape.js';
 import { SHOT_RADIUS } from './constants.js';
 import { theme } from "./main.js";
 
+import { getMuted, getSoundVariant } from './soundManager.js';
+
+function playShootSound() {
+    if (getMuted()) return;
+  
+    let path = '/assets/audio/shoot.mp3';
+    if (getSoundVariant()) {
+      path = '/assets/audio/bodizs_piu.mp3';
+    }
+  
+    const shootSound = new Audio(path);
+    shootSound.volume = 0.1;
+    shootSound.currentTime = 0;
+    shootSound.play().catch(e => console.log('Shoot sound error:', e));
+  }
+  
+  export { playShootSound };
+
 class Shot extends CircleShape {
     constructor(x, y) {
         super(x, y, SHOT_RADIUS);
+        playShootSound();
         
     }
 

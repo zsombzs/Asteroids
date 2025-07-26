@@ -11,7 +11,7 @@ const images = [
   'themes/ww2/boost.png',
   'themes/ww2/spaceship.png',
   'themes/ww2/asteroid.png',
-  'images/zsasteroids_icon_no_bg.png',
+  '/assets/images/zsasteroids_icon_no_bg.png',
   'themes/space/multishot.png',
   'themes/ocean/multishot.png',
   'themes/jungle/multishot.png',

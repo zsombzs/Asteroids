@@ -5,6 +5,8 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH } from "./constants.js";
 import { powerUps, drawable } from "./main.js"
 import { theme } from "./main.js"
 
+import { playSound, getSoundVariant } from './soundManager.js';
+
 class Player extends CircleShape {
     
     constructor(x, y, updatable, drawable, shots) {
@@ -101,6 +103,11 @@ class Player extends CircleShape {
         
         powerUps.forEach((powerUp, index) => {
             if (this.collidesWithCircle(powerUp)) {
+                if (getSoundVariant()) {
+                    playSound("/assets/audio/adi_good.mp3", 0.15);
+                  } else {
+                    playSound("/assets/audio/powerup_activated.mp3", 0.15);
+                  }
                 powerUps.splice(index, 1);
                 drawable.splice(drawable.indexOf(powerUp), 1);
                 if (powerUp.type === "boost") {

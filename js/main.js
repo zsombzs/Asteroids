@@ -10,8 +10,10 @@ import { supabase } from '/js/supabase.js';
 import { PowerUp } from "/js/powerup.js";
 import { Strike } from '/js/strike.js';
 
-document.body.style.backgroundImage = `url('/themes/${theme}/background.jpg')`;
+import { toggleMuted, getMuted } from './soundManager.js';
+import { playSound, toggleSoundVariant, getSoundVariant } from './soundManager.js';
 
+document.body.style.backgroundImage = `url('/themes/${theme}/background.jpg')`;
 
 let canvas = document.getElementById('gameCanvas');
 let ctx = canvas.getContext('2d');
@@ -82,6 +84,8 @@ let score = 0;
 
 let lastEarnedPoints = null;
 
+let lastStrikeCountdownStage = null;
+
 function updateScoreFromHitbox(hitboxRadius) {
 
     if (hitboxRadius > 142) {
@@ -143,7 +147,7 @@ let nextStrikeCountdownStart = null;
 let currentStrikeTime = null;
 let strikeCountdownText = null;
 
-
+let lastCountdownStage = null;
 
 function gameLoop() {
     let now = Date.now();
@@ -165,12 +169,18 @@ function gameLoop() {
     
         if (nextStrikeCountdownStart) {
             const countdownElapsed = (Date.now() - nextStrikeCountdownStart) / 1000;
+
+            let countdownStage = null;
+
             if (countdownElapsed < 1) {
                 strikeCountdownText = "Strike incoming in 3...";
+                countdownStage = 3;
             } else if (countdownElapsed < 2) {
                 strikeCountdownText = "Strike incoming in 2...";
+                countdownStage = 2;
             } else if (countdownElapsed < 3) {
                 strikeCountdownText = "Strike incoming in 1...";
+                countdownStage = 1;
             } else {
                 strikeCountdownText = null;
                 spawnStrike();
@@ -178,7 +188,14 @@ function gameLoop() {
                 pendingStrikeTimes.shift();
                 nextStrikeCountdownStart = null;
                 currentStrikeTime = null;
+                lastStrikeCountdownStage = null;
             }
+
+            if (countdownStage !== null && countdownStage !== lastStrikeCountdownStage) {
+                playSound("/assets/audio/strike_alarm.mp3");
+                lastStrikeCountdownStage = countdownStage;
+            }
+        
         }
     }
 
@@ -228,18 +245,33 @@ function gameLoop() {
         let elapsedTime = (Date.now() - countdownStartTime) / 1000;
 
         let displayText = "";
+        let countdownStage = null;
         if (elapsedTime < 1) {
             displayText = "3";
+            countdownStage = 3;
         } else if (elapsedTime < 2) {
             displayText = "2";
+            countdownStage = 2;
         } else if (elapsedTime < 3) {
             displayText = "1";
+            countdownStage = 1;
         } else if (elapsedTime < 4) {
             displayText = "START";
+            countdownStage = "start";
         } else {
             countdownRunning = false;
             gameStartTime = Date.now();
             powerUpSpawnTime = gameStartTime + 5000;
+            lastCountdownStage = null;
+        }
+
+        if (countdownStage !== null && countdownStage !== lastCountdownStage) {
+            if (countdownStage === "start") {
+                playSound("/assets/audio/start.mp3");
+            } else {
+                playSound("/assets/audio/countdown.mp3");
+            }
+            lastCountdownStage = countdownStage;
         }
 
         ctx.save();
@@ -252,6 +284,11 @@ function gameLoop() {
     } else if (gameOver) {
         if (!showGameOver) {
             showGameOver = true;
+            if (getSoundVariant()) {
+                playSound("/assets/audio/adi_death.mp3");
+              } else {
+                playSound("/assets/audio/gameover.mp3");
+              }
         }
 
         let elapsedGameOver = (Date.now() - gameOverTime) / 1000;
@@ -328,6 +365,11 @@ function gameLoop() {
 
             for (let bullet of shots) {
                 if (asteroid.collidesWith(bullet)) {
+                    if (getSoundVariant()) {
+                        playSound("/assets/audio/adi_death.mp3", 0.07);
+                      } else {
+                        playSound("/assets/audio/hit.mp3", 0.07);
+                      }
                     bullet.kill(updatable, drawable, shots);
                     const hitboxBeforeSplit = asteroid.hitboxRadius;
                     updateScoreFromHitbox(hitboxBeforeSplit);
@@ -387,6 +429,10 @@ function gameLoop() {
     ctx.font = '20px Arial';
     ctx.textAlign = 'left';
     ctx.fillText('W = forward   A = rotate left   D = rotate right   S = backward   SPACE = shoot, restart', 10, SCREEN_HEIGHT - 10);
+
+    ctx.font = '25px Arial';
+    ctx.textAlign = 'right';
+    ctx.fillText('N = Sound Effects ON/OFF   M = Music ON/OFF   B = B&Á ON/OFF', SCREEN_WIDTH - 10, SCREEN_HEIGHT - 10);
     ctx.restore();
 
     const iconSize = 30;
@@ -460,6 +506,7 @@ function spawnPowerUp(type = "boost") {
     powerUps.push(p);
     drawable.push(p);
     updatable.push(p);
+    playSound("/assets/audio/powerup_spawned.mp3", 0.15);
 }
 
 backgroundImage.onload = function() {
@@ -555,6 +602,7 @@ async function promptForNameAndSave(score) {
         const input = document.getElementById("playerNameInput");
         const submitButton = document.getElementById("submitNameButton");
         const cancelButton = document.getElementById("cancelNameButton");
+        playSound("/assets/audio/top5.mp3", 0.5);
       
         isNamePromptActive = true
         modal.style.display = "flex";
@@ -583,6 +631,7 @@ async function promptForNameAndSave(score) {
 }
 
 function spawnStrike() {
+    playSound("/assets/audio/strike_whoosh.mp3", 0.5);
     new Strike(
         updatable,
         drawable,
@@ -603,9 +652,52 @@ function spawnStrike() {
         },
         () => {
             score += 200;
+            if (getSoundVariant()) {
+                playSound("/assets/audio/adi_good.mp3", 0.5);
+              } else {
+                playSound("/assets/audio/strike_earned.mp3", 0.5);
+              }
             lastEarnedPoints = 200;
         }
     );
 }
 
+const soundToggleButton = document.getElementById('soundToggle');
 
+soundToggleButton.innerHTML = `<i class="fas ${getMuted() ? 'fa-volume-off' : 'fa-volume-high'}"></i>`;
+
+function updateSoundIcon() {
+  const muted = getMuted();
+  soundToggleButton.innerHTML = `<i class="fas ${muted ? 'fa-volume-off' : 'fa-volume-high'}"></i>`;
+}
+
+soundToggleButton.addEventListener('click', () => {
+  toggleMuted();
+  soundToggleButton.blur();
+  updateSoundIcon();
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'n' || event.key === 'N') {
+    toggleMuted();
+    updateSoundIcon();
+  }
+});
+
+const soundVariantToggle = document.getElementById('soundVariantToggle');
+
+soundVariantToggle.textContent = `B&Á: ${getSoundVariant() ? 'OFF' : 'ON'}`;
+
+function toggleVariant() {
+    const alt = toggleSoundVariant();
+    soundVariantToggle.blur();
+    soundVariantToggle.textContent = `B&Á: ${alt ? 'OFF' : 'ON'}`;
+  }
+  
+  soundVariantToggle.addEventListener('click', toggleVariant);
+  
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'b' || e.key === 'B') {
+      toggleVariant();
+    }
+  });
